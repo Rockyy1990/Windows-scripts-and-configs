@@ -1,0 +1,5 @@
+Windows Registry Editor Version 5.00
+
+; Rename C to System
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\DriveIcons\C]
+"Label"="System"

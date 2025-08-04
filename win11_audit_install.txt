@@ -1,0 +1,40 @@
+Um Windows 11 im Audit-Modus zu installieren, folgen Sie diesen Schritten:
+
+Hinweis: Der Audit-Modus wird hauptsächlich für die Image-Vorbereitung und -Anpassung verwendet, z.B. für das Erstellen von Unternehmens-Images. Stellen Sie sicher, dass Sie die entsprechenden Administratorrechte haben.
+
+1. **Vorbereitung**:
+   - Stellen Sie sicher, dass Sie eine Windows 11-Installationsmedien (USB- oder ISO-Datei) haben.
+   - Booten Sie den Computer vom Installationsmedium.
+
+2. **Windows-Installation starten**:
+   - Folgen Sie den Installationsanweisungen, bis Sie zum Bildschirm „Wo möchten Sie Windows installieren?“ kommen.
+   - Wählen Sie die Partition aus, auf der Windows installiert werden soll, und klicken Sie auf „Weiter“.
+
+3. **Auf den Audit-Modus umschalten**:
+   - Beim ersten Start nach der Installation erscheint der „Out-of-Box-Experience“ (OOBE).
+   - Drücken Sie **Strg + Shift + F3** gleichzeitig. Dies bringt Sie direkt in den Audit-Modus.
+   
+   **Hinweis:** Wenn dieser Shortcut nicht funktioniert, kann es sein, dass der Windows-Setup-Prozess angepasst wurde. Alternativ können Sie den Befehl auch nach Abschluss der Installation ausführen:
+
+   - Melden Sie sich an, öffnen Sie die Eingabeaufforderung (cmd) mit Administratorrechten.
+   - Geben Sie folgenden Befehl ein:
+     ```
+     sysprep /oobe /generalize /shutdown
+     ```
+     oder für den Audit-Modus:
+     ```
+     sysprep /audit /generalize /shutdown
+     ```
+   
+   - Starten Sie den PC neu, und der Computer startet automatisch in den Audit-Modus.
+
+4. **Im Audit-Modus**:
+   - Der Computer startet nun in den Audit-Modus, in dem Sie Windows anpassen, Treiber installieren oder Anwendungen vorbereiten können.
+   - Sie können auch das Windows-System-Image (WIM) weiter anpassen.
+
+**Wichtig:** Nach Abschluss der Anpassungen und Tests sollten Sie den Image-Deployment-Prozess beenden, indem Sie `sysprep /quit` ausführen, um das System für die Verteilung vorzubereiten.
+
+---
+
+Wenn Sie Windows 11 im Audit-Modus für spezielle Zwecke installieren möchten, empfiehlt es sich, die offiziellen Microsoft-Dokumentationen zum Thema **"Windows System Preparation Tool (Sysprep)"** und **"Windows Imaging and Configuration Designer"** zu konsultieren.
+

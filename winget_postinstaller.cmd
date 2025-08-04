@@ -11,11 +11,13 @@ echo Discord
 echo Putty
 echo Rufus (USB Tool)
 echo WPU (Wise Program Uninstaller)
-echo Vivaldi Browser
+:: echo Vivaldi Browser
+:: echo Firefox Browser
 echo SMPlayer
 echo Steam Gaming Platform
 echo yt-dlp
 echo ffmpeg (shared)
+echo HandBrake (Video converter)
 echo NoMachine RDP
 echo qBittorrent
 echo NETworkManager
@@ -54,9 +56,13 @@ echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
 echo WPU installation completed.
 
-echo Installing Vivaldi Browser...
-winget install -e --id Vivaldi.Vivaldi
-echo Vivaldi installation completed.
+:: echo Installing Vivaldi Browser...
+:: winget install -e --id Vivaldi.Vivaldi
+:: echo Vivaldi installation completed.
+
+:: echo Installing Firefox Browser...
+:: winget install --id=Mozilla.Firefox -e
+:: echo Firefox Browser installation completed.
 
 echo Installing SMPlayer...
 winget install -e --id SMPlayer.SMPlayer
@@ -74,6 +80,10 @@ echo Installing ffmpeg (shared)...
 winget install -e --id Gyan.FFmpeg.Shared
 echo ffmpeg (shared) install is complete.
 
+echo Installing HandBrake...
+winget install -e --id HandBrake.HandBrake
+echo install HandBrake is now complete.
+
 echo Installing NoMachine RDP...
 winget install -e --id NoMachine.NoMachine
 echo install NoMachine RDP is complete.
@@ -85,6 +95,8 @@ echo install qBittorrent is complete.
 echo Installing NETworkManager...
 winget install -e --id BornToBeRoot.NETworkManager
 echo install NETworkManager is complete.
+
+winget upgrade --all
 
 exit /b
 

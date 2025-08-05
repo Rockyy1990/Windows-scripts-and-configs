@@ -424,19 +424,6 @@ if %errorlevel% EQU 0 (
 )
 
 
-bcdedit /set firstmegabytepolicy UseAll
-bcdedit /deletevalue useplatformclock
-bcdedit /set useplatformtick yes
-bcdedit /set disabledynamictick yes
-bcdedit /set tscsyncpolicy enhanced
-
-bcdedit /set bootuxdisabled on
-bcdedit /set quietboot off
-
-bcdedit /set nointegritychecks on
-bcdedit /set recoveryenabled off
-
-
 echo.
 echo == Optimizing NTFS parameters for performance and SSD ==
 echo.
@@ -452,16 +439,6 @@ fsutil behavior set disableencryption 1
 
 echo == Enabling TRIM for SSD ==
 fsutil behavior set DisableDeleteNotify 0
-
-
-
-echo Cleaning Windows update files...
-dism /Online /Cleanup-Image /StartComponentCleanup /ResetBase /Quiet
-echo Cleaned Windows update files successfully.
-
-echo -- Deleting Temp files
-del /s /f /q c:\windows\temp\*.*
-del /s /f /q C:\WINDOWS\Prefetch
 
 
 :: Pause the script

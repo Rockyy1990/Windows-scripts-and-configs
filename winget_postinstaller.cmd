@@ -96,7 +96,18 @@ echo Installing NETworkManager...
 winget install -e --id BornToBeRoot.NETworkManager
 echo install NETworkManager is complete.
 
-winget upgrade --all
+echo additional runtimes
+winget install -e --id=Microsoft.VCRedist.2012.x86 
+winget install -e --id=Microsoft.VCRedist.2012.x64 
+winget install -e --id=Microsoft.VCRedist.2013.x86 
+winget install -e --id=Microsoft.VCRedist.2013.x64 
+
+echo Upgrade all packages..
+winget upgrade --all --force
+
+echo.
+echo All programs and runtimes are installed.
+echo.
 
 exit /b
 

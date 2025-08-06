@@ -332,8 +332,11 @@ powershell -Command "try { Disable-WindowsOptionalFeature -FeatureName "WindowsM
 :: Enable NetFx4.8
 DISM /Online /Enable-Feature /FeatureName:NetFx48 /All /NoRestart
 
-:: Time fix for linux dualboot
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" /v "RealTimeIsUniversal" /t REG_BINARY /d 0100000000000000 /f
+DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
+
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
+wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
+wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
 
 :: Disable Lockscreen
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoLockScreen /t REG_DWORD /d 1 /f

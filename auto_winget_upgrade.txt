@@ -1,0 +1,95 @@
+Um dein Batch-Skript automatisch alle 14 Tage mit dem Task Scheduler (Aufgabenplanung) auszuführen und den Namen „winget upgrade“ zu verwenden, 
+kannst du die folgenden Schritte befolgen:
+
+### Schritt 1: Speichere dein Skript in einer BAT-Datei
+1. Öffne den Editor (Notepad).
+2. Kopiere dein Skript in den Editor:
+```batch
+@echo off
+REM Dieses Skript aktualisiert alle Programme mit winget alle 14 Tage
+
+REM Pfad für die Speicherung des Zeitstempels
+set "timestampFile=%~dp0last_update.txt"
+
+REM Funktion, um das letzte Update-Datum zu lesen
+if exist "%timestampFile%" (
+    for /f %%A in (%timestampFile%) do set "lastUpdate=%%A"
+) else (
+    set "lastUpdate=0"
+)
+
+REM Aktuelles Datum in Sekunden seit Epoche
+for /f %%A in ('powershell -NoProfile -Command "(Get-Date).ToUnixTimeSeconds()"') do set "currentTime=%%A"
+
+REM Berechnung der Differenz in Tagen
+set /a diffDays=0
+if "%lastUpdate%" NEQ "0" (
+    set /a diffSeconds=%currentTime% - %lastUpdate%
+    set /a diffDays=%diffSeconds% / 86400
+)
+
+REM Überprüfung, ob 14 Tage vergangen sind
+if %diffDays% GEQ 14 (
+    echo Es sind 14 Tage vergangen. Aktualisiere Programme...
+    winget upgrade --all --accept-source-agreements --accept-package-agreements
+    REM Speichern des aktuellen Zeitstempels
+    echo %currentTime% > "%timestampFile%"
+) else (
+    echo Es sind erst %diffDays% Tage vergangen. Kein Update notwendig.
+)
+```
+3. Speichere die Datei z.B. als `winget_upgrade.bat` in einem gewünschten Verzeichnis, z.B. `C:\Scripts\`.
+
+---
+
+### Schritt 2: Erstelle eine geplante Aufgabe mit Task Scheduler
+1. **Öffne den Task Scheduler:**
+   - Drücke `Win + R`, tippe `taskschd.msc` und drücke Enter.
+
+2. **Neue Aufgabe erstellen:**
+   - Klicke auf **Aktion** > **Aufgabe erstellen...**.
+
+3. **Allgemein:**
+   - Gib der Aufgabe einen Namen, z.B. `winget upgrade`.
+   - Wähle **Mit höchsten Privilegien ausführen** (damit `winget` korrekt funktioniert).
+
+4. **Trigger hinzufügen:**
+   - Wechsel zum Tab **Trigger**.
+   - Klicke auf **Neu...**.
+   - Wähle **Wöchentlich**.
+   - Wähle z.B. **alle 2 Wochen**.
+   - Stelle den Startzeitpunkt ein.
+   - Klicke **OK**.
+
+5. **Aktion hinzufügen:**
+   - Wechsel zum Tab **Aktionen**.
+   - Klicke auf **Neu...**.
+   - Aktion: **Programm starten**.
+   - Programm/Skript: `C:\Windows\System32\cmd.exe`
+   - Argumente hinzufügen: `/c "C:\Scripts\winget_upgrade.bat"` (Passe den Pfad an, wo du dein Script gespeichert hast).
+
+6. **Bedingungen & Einstellungen:**
+   - Optional: Passe die Einstellungen nach Bedarf an (z.B. nur ausführen, wenn im Netz, etc.).
+
+7. **Aufgabe speichern:**
+   - Klicke auf **OK** und gib bei Bedarf Administratorrechte frei.
+
+---
+
+### Optional: Aufgabe mit PowerShell erstellen
+Alternativ kannst du die Aufgabe auch direkt per PowerShell erstellen:
+
+```powershell
+$action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\cmd.exe' -Argument '/c "C:\Scripts\winget_upgrade.bat"'
+$trigger = New-ScheduledTaskTrigger -Weekly -WeeksInterval 2 -At 9:00AM
+$principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -RunLevel Highest
+$task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal -Description "Winget Upgrade alle 14 Tage"
+Register-ScheduledTask -TaskName "winget upgrade" -InputObject $task
+```
+
+---
+
+### Zusammenfassung:
+- Speichere dein Skript in eine `.bat` Datei.
+- Erstelle eine geplante Aufgabe namens **winget upgrade**, die alle 2 Wochen ausgeführt wird.
+- Stelle sicher, dass die Aufgabe mit Administratorrechten läuft, damit `winget` funktioniert.

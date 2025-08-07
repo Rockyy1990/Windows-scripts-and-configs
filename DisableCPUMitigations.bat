@@ -5,8 +5,6 @@ rem # !!! WARNING !!!
 rem # GAMING PCS ONLY
 rem # DONT DO SENSITIVE TASKS LIKE BANKING
 
-rem # !!! WARNING !!!
-
 rem # https://www.askwoody.com/forums/topic/on-security-patch-lady-susan-bradley-explains-why-you-might-or-might-not-want-to-protect-your-machine-from-spectre-and-meltdown/
 
 PAUSE

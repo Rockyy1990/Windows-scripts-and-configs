@@ -1,6 +1,10 @@
-:: WinScript 
 @echo off
-:: Check if the script is running as admin
+
+echo.
+echo Postinstall script after windows install.
+echo.
+pause
+
 openfiles >nul 2>&1
 if %errorlevel% neq 0 (
     color 4
@@ -308,6 +312,8 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpa
 ; Launch File Explorer to "This PC"
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v LaunchTo /t REG_DWORD /d 1 /f
 
+rem # Honor User adjusted FSE value
+reg add "HKCU\System\GameConfigStore" /v "GameDVR_HonorUserFSEBehaviorMode" /t REG_DWORD /d "1" /f
 
 
 REM add the "Install" context menu for CABFolder with RunAs
@@ -329,9 +335,7 @@ DISM /Online /Disable-Feature /FeatureName:"Recall"
 :: Disabling Windows Media Player
 powershell -Command "try { Disable-WindowsOptionalFeature -FeatureName "WindowsMediaPlayer" -Online -NoRestart -ErrorAction Stop; Write-Output "Successfully disabled the feature WindowsMediaPlayer." } catch { Write-Output "Feature not found." }"
 
-:: Enable NetFx4.8
-DISM /Online /Enable-Feature /FeatureName:NetFx48 /All /NoRestart
-
+REM Enable WMIC
 DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
 
 wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
@@ -412,6 +416,23 @@ reg add "HKLM\System\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v
 :: Disable SMB signing requirement
 reg add "HKLM\System\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v RequireSecuritySignature /t REG_DWORD /d 0 /f
 
+rem # Powerdown after Shutdown
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "PowerdownAfterShutdown" /t REG_SZ /d "1" /f
+
+rem # Disable WMI logs
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /f
+reg delete "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SQMLogger" /f
+
+rem # Disable ReadyBoost
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\EMDMgmt" /v "GroupPolicyDisallowCaches" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\EMDMgmt" /v "AllowNewCachesByDefault" /t REG_DWORD /d "0" /f
+
+rem # Disable Boot Performance Diagnostics
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Diagnostics\Performance\BootCKCLSettings" /v "Start" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Diagnostics\Performance\ShutdownCKCLSettings" /v "Start" /t REG_DWORD /d "0" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib" /v "Disable Performance Counters" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\ClickToRun\OverRide" /v "DisableLogManagement" /t REG_DWORD /d "1" /f
+
 
 :: Set Ultimate Performance Power Plan
 powershell -command "$ultimatePerformance = powercfg -list | Select-String -Pattern 'Ultimate Performance'; if ($ultimatePerformance) { echo '-- - Power plan already exists' } else { echo '-- - Enabling Ultimate Performance'; $output = powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 2>&1; if ($output -match 'Unable to create a new power scheme' -or $output -match 'The power scheme, subgroup or setting specified does not exist') { powercfg -RestoreDefaultSchemes } }"
@@ -427,21 +448,17 @@ if %errorlevel% EQU 0 (
 )
 
 
-echo.
-echo == Optimizing NTFS parameters for performance and SSD ==
-echo.
+REM Re_add txt file to context menu
+reg add "HKEY_CLASSES_ROOT\.txt\ShellNew" /v "ItemName" /t REG_BINARY /d 40,00,25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,6e,00,6f,00,74,00,65,00,70,00,61,00,64,00,2e,00,65,00,78,00,65,00,2c,00,2d,00,34,00,37,00,30,00,00,00 /f
+reg add "HKEY_CLASSES_ROOT\txtfilelegacy" /ve /d "Text Document" /f
 
-echo == Disabling Last Access Timestamp ==
-fsutil behavior set disablelastaccess 1
 
-echo == Disabling 8dot3 Name Creation ==
-fsutil behavior set disable8dot3 1
-
-echo == Disabling NTFS File Encryption ==
-fsutil behavior set disableencryption 1
-
-echo == Enabling TRIM for SSD ==
-fsutil behavior set DisableDeleteNotify 0
+rem # File System Tweaks
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "DisableLastAccess" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "MaximumTunnelEntries" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "MaximumTunnelEntryAgeInSeconds" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsAllowExtendedCharacterIn8dot3Name" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisableVolsnapHints" /t REG_DWORD /d "0" /f
 
 
 :: Pause the script

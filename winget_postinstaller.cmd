@@ -6,10 +6,11 @@ echo Check internet connection before start this script!
 echo.
 
 echo This script installs:
-echo ------------------------
+echo --------------------------
 echo Discord
 echo Putty
 echo Rufus (USB Tool)
+:: echo Notepad++
 echo WPU (Wise Program Uninstaller)
 :: echo Vivaldi Browser
 :: echo Firefox Browser
@@ -21,7 +22,7 @@ echo HandBrake (Video converter)
 echo NoMachine RDP
 echo qBittorrent
 echo NETworkManager
-echo -----------------------
+echo -------------------------
 echo.
 
 pause
@@ -52,6 +53,10 @@ echo Installing Rufus...
 winget install -e --id Rufus.Rufus -h
 echo Rufus installation completed.
 
+:: echo Installing Notepad++...
+:: winget install -e --id Notepad++.Notepad++
+:: echo Notepad++ installation completed.
+
 echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
 echo WPU installation completed.
@@ -61,7 +66,7 @@ echo WPU installation completed.
 :: echo Vivaldi installation completed.
 
 :: echo Installing Firefox Browser...
-:: winget install --id=Mozilla.Firefox -e
+:: winget install -e --id=Mozilla.Firefox 
 :: echo Firefox Browser installation completed.
 
 echo Installing SMPlayer...
@@ -86,23 +91,24 @@ echo install HandBrake is now complete.
 
 echo Installing NoMachine RDP...
 winget install -e --id NoMachine.NoMachine
-echo install NoMachine RDP is complete.
+echo installing NoMachine RDP is complete.
 
 echo Installing qBittorrent...
 winget install -e --id qBittorrent.qBittorrent
-echo install qBittorrent is complete.
+echo installing qBittorrent is complete.
 
 echo Installing NETworkManager...
 winget install -e --id BornToBeRoot.NETworkManager
-echo install NETworkManager is complete.
+echo installing NETworkManager is complete.
 
 echo additional runtimes
-winget install -e --id=Microsoft.VCRedist.2012.x86 
-winget install -e --id=Microsoft.VCRedist.2012.x64 
-winget install -e --id=Microsoft.VCRedist.2013.x86 
-winget install -e --id=Microsoft.VCRedist.2013.x64 
+winget install -e --id Microsoft.VCRedist.2012.x86 
+winget install -e --id Microsoft.VCRedist.2012.x64 
+winget install -e --id Microsoft.VCRedist.2013.x86 
+winget install -e --id Microsoft.VCRedist.2013.x64 
 
 echo Upgrade all packages..
+winget upgrade --all 
 winget upgrade --all --force
 
 echo.

@@ -10,10 +10,10 @@ echo --------------------------
 echo Discord
 echo Putty
 echo Rufus (USB Tool)
-:: echo Notepad++
+echo Notepad++
 echo WPU (Wise Program Uninstaller)
 :: echo Vivaldi Browser
-:: echo Firefox Browser
+echo Firefox Browser
 echo SMPlayer
 echo Steam Gaming Platform
 echo yt-dlp
@@ -53,9 +53,9 @@ echo Installing Rufus...
 winget install -e --id Rufus.Rufus -h
 echo Rufus installation completed.
 
-:: echo Installing Notepad++...
-:: winget install -e --id Notepad++.Notepad++
-:: echo Notepad++ installation completed.
+echo Installing Notepad++...
+winget install -e --id Notepad++.Notepad++
+echo Notepad++ installation completed.
 
 echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
@@ -65,9 +65,9 @@ echo WPU installation completed.
 :: winget install -e --id Vivaldi.Vivaldi
 :: echo Vivaldi installation completed.
 
-:: echo Installing Firefox Browser...
-:: winget install -e --id=Mozilla.Firefox 
-:: echo Firefox Browser installation completed.
+echo Installing Firefox Browser...
+winget install -e --id=Mozilla.Firefox 
+echo Firefox Browser installation completed.
 
 echo Installing SMPlayer...
 winget install -e --id SMPlayer.SMPlayer
@@ -81,9 +81,9 @@ echo Installing yt-dlp...
 winget install -e --id yt-dlp.yt-dlp
 echo yt-dlp install is complete.
 
-echo Installing ffmpeg (shared)...
-winget install -e --id Gyan.FFmpeg.Shared
-echo ffmpeg (shared) install is complete.
+:: echo Installing ffmpeg (shared)...
+:: winget install -e --id Gyan.FFmpeg.Shared
+:: echo ffmpeg (shared) install is complete.
 
 echo Installing HandBrake...
 winget install -e --id HandBrake.HandBrake
@@ -96,10 +96,6 @@ echo installing NoMachine RDP is complete.
 echo Installing qBittorrent...
 winget install -e --id qBittorrent.qBittorrent
 echo installing qBittorrent is complete.
-
-echo Installing NETworkManager...
-winget install -e --id BornToBeRoot.NETworkManager
-echo installing NETworkManager is complete.
 
 echo additional runtimes
 winget install -e --id Microsoft.VCRedist.2012.x86 

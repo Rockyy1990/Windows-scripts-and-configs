@@ -38,6 +38,7 @@ if %errorLevel% == 0 (
     echo winget has been installed.
 )
 
+winget upgrade
 
 echo Installing Discord...
 winget install -e --id Discord.Discord -h
@@ -103,9 +104,13 @@ winget install -e --id Microsoft.VCRedist.2012.x64
 winget install -e --id Microsoft.VCRedist.2013.x86 
 winget install -e --id Microsoft.VCRedist.2013.x64 
 
+echo.
 echo Upgrade all packages..
+echo. 
+
 winget upgrade --all 
 winget upgrade --all --force
+
 
 echo.
 echo All programs and runtimes are installed.

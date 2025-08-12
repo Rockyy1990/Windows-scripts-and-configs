@@ -1,0 +1,102 @@
+@echo off
+setlocal enabledelayedexpansion
+
+:main_menu
+cls
+echo ===========================
+echo       Diskpart Menü
+echo ===========================
+echo 1. Liste aller Laufwerke anzeigen
+echo 2. Neue Partition erstellen
+echo 3. Partition löschen
+echo 4. Partition formatieren
+echo 5. Laufwerksbuchstabe ändern
+echo 6. Laufwerk aktiv setzen
+echo 7. Beenden
+echo ===========================
+set /p choice=Bitte eine Option auswählen (1-7): 
+
+if "%choice%"=="1" goto list_disks
+if "%choice%"=="2" goto create_partition
+if "%choice%"=="3" goto delete_partition
+if "%choice%"=="4" goto format_partition
+if "%choice%"=="5" goto change_drive_letter
+if "%choice%"=="6" goto set_active
+if "%choice%"=="7" goto end
+echo Ungültige Auswahl, bitte erneut versuchen.
+pause
+goto main_menu
+
+:list_disks
+echo Liste der Laufwerke:
+diskpart /s "%~dp0\list_disks.txt"
+pause
+goto main_menu
+
+:create_partition
+call :diskpart_script create_partition.txt
+pause
+goto main_menu
+
+:delete_partition
+call :diskpart_script delete_partition.txt
+pause
+goto main_menu
+
+:format_partition
+call :diskpart_script format_partition.txt
+pause
+goto main_menu
+
+:change_drive_letter
+call :diskpart_script change_drive_letter.txt
+pause
+goto main_menu
+
+:set_active
+call :diskpart_script set_active.txt
+pause
+goto main_menu
+
+:end
+echo Programm beendet.
+pause
+exit /b
+
+:: Funktion zum Ausführen von Diskpart-Skripten
+:diskpart_script
+set script_file=%1
+diskpart /s "%~dp0\%script_file%"
+exit /b
+
+:: Erstellen der benötigten Diskpart-Skripte im selben Verzeichnis
+:: Hinweis: Diese Skripte müssen vor der Ausführung erstellt werden.
+
+:: list_disks.txt
+:: list disk
+
+:: create_partition.txt
+:: select disk [Nummer]
+:: create partition primary
+:: assign
+
+:: delete_partition.txt
+:: select disk [Nummer]
+:: select partition [Nummer]
+:: delete partition override
+
+:: format_partition.txt
+:: select disk [Nummer]
+:: select partition [Nummer]
+:: format fs=ntfs quick
+:: assign
+
+:: change_drive_letter.txt
+:: select disk [Nummer]
+:: select partition [Nummer]
+:: assign letter=[Buchstabe]
+
+:: set_active.txt
+:: select disk [Nummer]
+:: select partition [Nummer]
+:: active

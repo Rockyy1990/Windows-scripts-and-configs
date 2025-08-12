@@ -1,5 +1,9 @@
 @echo off
 
+echo.
+echo Install and config are complete.
+pause
+
 echo Cleaning Windows update files...
 dism /Online /Cleanup-Image /StartComponentCleanup /ResetBase /Quiet
 echo Cleaned Windows update files successfully.

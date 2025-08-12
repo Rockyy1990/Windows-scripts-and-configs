@@ -1,5 +1,4 @@
 rem # Disable CPU Mitigations
-
 rem # !!! WARNING !!!
 
 rem # GAMING PCS ONLY

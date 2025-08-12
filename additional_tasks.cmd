@@ -103,6 +103,9 @@ bcdedit /set extendedinput Yes
 bcdedit /set halbreakpoint No
 bcdedit /set bootmenupolicy Legacy
 
+fsutil behavior set memoryusage 2
+fsutil behavior set mftzone 4
+
 
 rem # Audio system profile tweaks 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Affinity" /t REG_DWORD /d "0" /f

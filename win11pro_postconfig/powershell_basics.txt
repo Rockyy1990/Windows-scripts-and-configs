@@ -1,0 +1,79 @@
+
+# Powershell 
+# Basic commands for a script to config windows
+
+
+# print a text like echo
+Write-Output "All in one Reg installer"
+
+# wait for a key like pause
+Read-Host -Prompt "Drücken Sie die Eingabetaste, um fortzufahren"
+
+# pause a script for a few seconds
+Start-Sleep -Seconds 2
+
+
+# search for a windows services
+Get-Service "NameDesDienstes"
+
+# restart a windows service
+Restart-Service -Name "NameDesDienstes"
+
+# disable windows services
+Stop-Service -Name "NameDesDienstes"
+Set-Service -Name "NameDesDienstes" -StartupType Disabled
+
+
+# search for a process
+Get-Process
+
+# install a locale program over powershell
+Start-Process -ArgumentList "/S"  "$($PSScriptRoot)\npp.7.5.Installer.exe" -Wait
+
+# execute a reg file in same folder as the script with silent switch
+Start-Process regedit -ArgumentList "/s", "Disable_ClickToDo_for_all_users.reg" -Wait
+
+# to stop a program
+Stop-Process -Name "processname"
+
+
+# disable a windows feature
+Disable-WindowsOptionalFeature -Online -FeatureName "Containers-DisposableClientVM" 
+Disable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Hyper-V-Hypervisor"
+
+
+# installs a specified .cab or .msu package in the image
+Add-WindowsPackage -Online -PackagePath "c:\packages\package.cab"
+
+# repair windows using powershell
+Repair-WindowsImage -Online -RestoreHealth
+
+# add a reg key (cmd command over powershell)
+cmd /c 'reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 1 /f' | Out-File $log -append
+
+
+# Set IP adress
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress "192.168.1.100" -PrefixLength 24 -DefaultGateway "192.168.1.1"
+
+# Set custom dns server
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("8.8.8.8","8.8.4.4")
+
+# add a new user and add it to admin group
+New-LocalUser -Name "NeuerBenutzer" -Password "Geheim123!"
+Add-LocalGroupMember -Group "Administratoren" -Member "NeuerBenutzer"
+
+# stopping and restarting windows explorer
+taskkill /f /im explorer.exe
+start explorer.exe
+
+
+# delete a file or folder (to delete an not empty folder use -Recurse parameter)
+Remove-Item C:\ToBeDeleted
+
+
+# system reboot like shutdown /r
+Restart-Computer
+
+# computers in your network
+Restart-Computer -ComputerName Server01, Server03
+

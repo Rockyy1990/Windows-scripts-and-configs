@@ -1,7 +1,7 @@
 @echo off
 
 echo.
-echo This script optimizes the System Profil
+echo This script optimizes the System Profiles
 echo.
 pause
 

@@ -1,13 +1,11 @@
-rem # Disable CPU Mitigations
+@echo off
 
-rem # !!! WARNING !!!
+echo # Disable CPU Mitigations
 
-rem # GAMING PCS ONLY
-rem # DONT DO SENSITIVE TASKS LIKE BANKING
+echo # !!! WARNING !!!
 
-rem # !!! WARNING !!!
-
-rem # https://www.askwoody.com/forums/topic/on-security-patch-lady-susan-bradley-explains-why-you-might-or-might-not-want-to-protect-your-machine-from-spectre-and-meltdown/
+echo # GAMING PCS ONLY
+echo # DONT DO SENSITIVE TASKS LIKE BANKING
 
 PAUSE
 
@@ -19,4 +17,5 @@ reg add "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management
 
 reg add "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f
 
+echo All done.
 PAUSE

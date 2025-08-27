@@ -1,3 +1,11 @@
+@echo off
+
+echo.
+echo This disables all scheduled events..
+echo.
+pause
+echo.
+
 schtasks /change /tn "EqualizerAPOUpdateChecker" /disable
 schtasks /change /tn "MicrosoftEdgeUpdateTaskMachineCore" /disable
 schtasks /change /tn "MicrosoftEdgeUpdateTaskMachineUA" /disable

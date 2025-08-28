@@ -495,6 +495,9 @@ if %errorlevel% EQU 0 (
     echo Fehler beim Ändern des Laufwerksnamens.
 )
 
+rem Disable Windows Recovery Partition
+rem reagentc /info
+rem reagentc /disable
 
 REM Re_add txt file to context menu
 reg add "HKEY_CLASSES_ROOT\.txt\ShellNew" /v "ItemName" /t REG_BINARY /d 40,00,25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,00,5c,00,73,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,6e,00,6f,00,74,00,65,00,70,00,61,00,64,00,2e,00,65,00,78,00,65,00,2c,00,2d,00,34,00,37,00,30,00,00,00 /f
@@ -611,12 +614,11 @@ reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Ad
 REM Disable Virtual Desktops Alt-Tab Filter
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v VirtualDesktopAltTabFilter /t REG_DWORD /d 0 /f >NUL 2>&1
 
+echo.
 echo Registry values have been set.
 pause
 
 
-:: Pause the script
-pause
 :: Restore previous environment
 endlocal
 :: Exit the script

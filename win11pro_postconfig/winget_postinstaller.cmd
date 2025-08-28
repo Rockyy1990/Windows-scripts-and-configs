@@ -12,6 +12,8 @@ echo Putty
 echo Rufus (USB Tool)
 echo Notepad++
 echo WPU (Wise Program Uninstaller)
+echo Wise Disk Cleaner
+echo Wise Registry Cleaner
 :: echo Vivaldi Browser
 :: echo Firefox Browser
 echo SMPlayer
@@ -61,6 +63,12 @@ echo Notepad++ installation completed.
 echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
 echo WPU installation completed.
+
+rem Wise Disk Cleaner
+winget install XP9CW3GPQQS852 --accept-package-agreements --accept-source-agreements
+
+rem Wise Registry Cleaner
+winget install XPDLS1XBTXVPP4 --accept-package-agreements --accept-source-agreements
 
 :: echo Installing Vivaldi Browser...
 :: winget install -e --id Vivaldi.Vivaldi

@@ -37,7 +37,9 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\D
 REM Delete the registry key: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery" /f
 
+REM --------------------------------------------------------------
 
+REM Various bcd settings..
 bcdedit /set onecpu No
 bcdedit /deletevalue numproc
 bcdedit /deletevalue useplatformclock
@@ -56,7 +58,6 @@ bcdedit /set firstmegabytepolicy UseAll
 bcdedit /set avoidlowmemory 0x8000000
 bcdedit /set nolowmem Yes
 
-
 REM No boot log and debug
 bcdedit /set debug No
 bcdedit /set debugstart Disable
@@ -65,7 +66,6 @@ bcdedit /set bootlog No
 bcdedit /bootdebug Off
 bcdedit /bootems Off
 bcdedit /debug Off
-
 
 rem # Processor x2APIC Support helps operating systems run more efficiently on high core count configurations
 bcdedit /set x2apicpolicy Enable
@@ -79,7 +79,7 @@ REM bcdedit /set usefirmwarepcisettings No
 rem # Enable Physical Address Extension (PAE)
 bcdedit /set pae ForceEnable
 
-rem # Disable 57-bits 5-level paging, also known as "Linear Address 57". Only 100% effective on 10th gen Intel. 256 TB of virtual memory per-disk is way much more than enough anyway
+rem # Disable 57-bits 5-level paging, also known as "Linear Address 57". Only 100% effective on 10th gen Intel. 
 bcdedit /set linearaddress57 OptOut
 
 REM Increase the user-mode virtual address space 268435328 (256mb)
@@ -97,6 +97,8 @@ bcdedit /set bootmenupolicy Legacy
 
 fsutil behavior set memoryusage 2
 fsutil behavior set mftzone 4
+
+REM -------------------------------------------------------
 
 
 rem # Audio system profile tweaks 

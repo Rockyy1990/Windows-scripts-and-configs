@@ -25,11 +25,18 @@ https://batcmd.com/windows/11/services/
 # Creating an win10,11 iso with all updates
 https://uupdump.net/
 
+https://uup.rg-adguard.net/
+https://files.rg-adguard.net/category
+
+
 # News for windows 
 https://deskmodder.de/
 
 # Creating an answer file for windows auto install
 https://schneegans.de/windows/unattend-generator/
+
+# Creating usb sticks for multiple ISOs
+https://github.com/ventoy/Ventoy/releases
 
 
 ; Github Repositorys (Windows 10,11 tweaks)
@@ -42,10 +49,9 @@ https://schneegans.de/windows/unattend-generator/
 # https://github.com/NicholasBly
 # https://github.com/rahilpathan
 # https://github.com/ChrisTitusTech
-# https://github.com/raspi
 # https://github.com/simeononsecurity
 # https://github.com/alufena
-
+# https://github.com/shoober420
 
 
 

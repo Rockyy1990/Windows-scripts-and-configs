@@ -1,7 +1,7 @@
 @echo off
 
 echo.
-echo Install additional programs over winget (Windows Package Manager)
+echo Installs additional programs over winget (Windows Package Manager)
 echo Check internet connection before start this script!
 echo.
 
@@ -23,7 +23,7 @@ echo yt-dlp
 echo HandBrake (Video converter)
 echo NoMachine RDP
 echo qBittorrent
-echo NETworkManager
+echo vc runtimes 2012 and 2013
 echo -------------------------
 echo.
 
@@ -64,10 +64,10 @@ echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
 echo WPU installation completed.
 
-rem Wise Disk Cleaner
+echo Installing Wise Disk Cleaner ..
 winget install XP9CW3GPQQS852 --accept-package-agreements --accept-source-agreements
 
-rem Wise Registry Cleaner
+echo Installing Wise Registry Cleaner ..
 winget install XPDLS1XBTXVPP4 --accept-package-agreements --accept-source-agreements
 
 :: echo Installing Vivaldi Browser...

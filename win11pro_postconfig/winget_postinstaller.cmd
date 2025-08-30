@@ -65,10 +65,12 @@ winget install -e --id WiseCleaner.WiseProgramUninstaller
 echo WPU installation completed.
 
 echo Installing Wise Disk Cleaner ..
-winget install XP9CW3GPQQS852 --accept-package-agreements --accept-source-agreements
+winget install -e --id WiseCleaner.WiseDiskCleaner
+echo wise disk cleanr install complete.
 
 echo Installing Wise Registry Cleaner ..
-winget install XPDLS1XBTXVPP4 --accept-package-agreements --accept-source-agreements
+winget install -e --id WiseCleaner.WiseRegistryCleaner
+echo wise registry cleaner complete.
 
 :: echo Installing Vivaldi Browser...
 :: winget install -e --id Vivaldi.Vivaldi

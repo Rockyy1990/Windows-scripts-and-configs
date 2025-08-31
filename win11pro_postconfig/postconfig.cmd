@@ -642,8 +642,25 @@ REM Hide Recently Added Apps
 reg delete "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v "HideRecentlyAddedApps" /f >NUL 2>&1
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "HideRecentlyAddedApps" /t REG_DWORD /d 1 /f >NUL 2>&1
 
+rem # Disable Recommended Tips, Shortcuts, New Apps, and more on Start Menu
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_IrisRecommendations" /t REG_DWORD /d "0" /f >NUL 2>&1
+
+rem # Disable Most Used Apps on Start Menu
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoStartMenuMFUprogramsList" /t REG_DWORD /d "1" /f >NUL 2>&1
+
+rem # Disable File History
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\FileHistory" /v "Disabled" /t REG_DWORD /d "1" /f >NUL 2>&1
+
+rem # Disallow publishing of User Activities
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /t REG_DWORD /d "0" /f >NUL 2>&1
+
+
 REM Pin Windows Terminal
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartPage" /v "Favorites" /t REG_SZ /d "Windows.Terminal" /f >NUL 2>&1
+
+rem # Enable New Boot Animation
+reg add "HKLM\SYSTEM\ControlSet001\Control\BootControl" /v "BootProgressAnimation" /t REG_DWORD /d "1" /f >NUL 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\BootControl" /v "BootProgressAnimation" /t REG_DWORD /d "1" /f >NUL 2>&1
 
 
 echo.

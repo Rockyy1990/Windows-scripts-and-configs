@@ -52,6 +52,9 @@ https://github.com/ventoy/Ventoy/releases
 # https://github.com/simeononsecurity
 # https://github.com/alufena
 # https://github.com/shoober420
+# https://github.com/Batlez/Batlez-Tweaks
+# https://github.com/sherifmagdy32/gaming_os_tweaker
+# https://github.com/HakanFly/Windows-Tweaks
 
 
 

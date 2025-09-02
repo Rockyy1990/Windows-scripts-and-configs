@@ -7,10 +7,10 @@ echo --------------------------------------------------------
 echo.
 pause
 
-REM (Enable Windows Sandbox)
+echo -- (Enable Windows Sandbox)
 Dism /online /Enable-Feature /FeatureName:"Containers-DisposableClientVM" -All /NoRestart
 
-REM Remove features there are not needed.
+echo -- Remove features there are not needed.
 DISM /Online /Remove-Package /PackageName:Microsoft-Windows-MobilePC-Client-Premium /NoRestart
 DISM /Online /Remove-Package /PackageName:Server-Help /NoRestart
 DISM /Online /Remove-Capability /CapabilityName:Language.Handwriting
@@ -27,7 +27,7 @@ DISM /Online /Disable-Feature /FeatureName:Printing-XPSServices-Features /Remove
 
 
 
-REM Hide Home Icon from explorer
+echo -- Hide Home Icon from explorer
 REM Add the registry key
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}" /ve /d "CLSID_MSGraphHomeFolder" /f
 
@@ -39,7 +39,7 @@ reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explore
 
 REM --------------------------------------------------------------
 
-REM Various bcd settings..
+echo -- Various bcd settings..
 bcdedit /set onecpu No
 bcdedit /deletevalue numproc
 bcdedit /deletevalue useplatformclock
@@ -48,6 +48,7 @@ bcdedit /set disabledynamictick yes
 bcdedit /set tscsyncpolicy enhanced
 
 bcdedit /set bootuxdisabled on
+bcdedit /set uselegacyapicmode no
 bcdedit /set quietboot off
 
 bcdedit /set nointegritychecks on
@@ -58,7 +59,7 @@ bcdedit /set firstmegabytepolicy UseAll
 bcdedit /set avoidlowmemory 0x8000000
 bcdedit /set nolowmem Yes
 
-REM No boot log and debug
+echo -- No boot log and debug
 bcdedit /set debug No
 bcdedit /set debugstart Disable
 bcdedit /set bootdebug Off
@@ -67,7 +68,7 @@ bcdedit /bootdebug Off
 bcdedit /bootems Off
 bcdedit /debug Off
 
-rem # Processor x2APIC Support helps operating systems run more efficiently on high core count configurations
+echo -- Processor x2APIC Support helps operating systems run more efficiently on high core count configurations
 bcdedit /set x2apicpolicy Enable
 
 rem # Enable MSI
@@ -76,10 +77,10 @@ REM bcdedit /set MSI Default
 REM bcdedit /set usephysicaldestination No
 REM bcdedit /set usefirmwarepcisettings No
 
-rem # Enable Physical Address Extension (PAE)
+echo -- Enable Physical Address Extension (PAE)
 bcdedit /set pae ForceEnable
 
-rem # Disable 57-bits 5-level paging, also known as "Linear Address 57". Only 100% effective on 10th gen Intel. 
+echo -- Disable 57-bits 5-level paging, also known as "Linear Address 57". Only 100% effective on 10th gen Intel. 
 bcdedit /set linearaddress57 OptOut
 
 REM Increase the user-mode virtual address space 268435328 (256mb)
@@ -101,7 +102,7 @@ fsutil behavior set mftzone 4
 REM -------------------------------------------------------
 
 
-rem # Audio system profile tweaks 
+echo -- Audio system profile tweaks 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Affinity" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Background Only" /t REG_SZ /d "False" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Clock Rate" /t REG_DWORD /d "2710" /f
@@ -111,10 +112,10 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProf
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "SFIO Priority" /t REG_SZ /d "High" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Latency Sensitive" /t REG_SZ /d "True" /f
 
-rem # Disable lazy mode
+echo -- Disable lazy mode
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoLazyMode" /t REG_DWORD /d "1" /f
 
-rem # Games system profile tweaks 
+echo -- Games system profile tweaks 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d "False" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d "2710" /f
@@ -124,7 +125,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProf
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Latency Sensitive" /t REG_SZ /d "True" /f
 
-rem # DisplayPostProcessing system profile tweaks 
+echo -- DisplayPostProcessing system profile tweaks 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Affinity" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Background Only" /t REG_SZ /d "False" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Clock Rate" /t REG_DWORD /d "2710" /f
@@ -136,7 +137,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProf
 
 
 
-rem # Disables various desktop features
+echo -- Disables various desktop features
 reg add "HKCU\Control Panel\Desktop" /v "WindowArrangementActive" /t REG_DWORD /d "1" /f
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisallowShaking" /t REG_DWORD /d "1" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "JointResize" /t REG_DWORD /d "0" /f
@@ -145,11 +146,11 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "S
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_ShowClassicMode" /t REG_DWORD /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "WebView" /t REG_DWORD /d "0" /f
 
-rem # Disable ambient lighting
+echo -- Disable ambient lighting
 reg add "HKCU\Software\Microsoft\Lighting" /v "AmbientLightingEnabled" /t REG_DWORD /d "0" /f
 
 
-rem # Disable various logs
+echo -- Disable various logs
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AppModel" /v "Start" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Cellcore" /v "Start" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Circular Kernel Context Logger" /v "Start" /t REG_DWORD /d "0" /f
@@ -191,17 +192,15 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableThird
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsConsumerFeatures" /t REG_DWORD /d "1" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Credssp" /v "DebugLogLevel" /t REG_DWORD /d "0" /f
 
-REM Disable USB Power Saving
+echo -- Disable USB Power Saving
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\USB" /v "DisableSelectiveSuspend" /t REG_DWORD /d "1" /f
 
 
 
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalCriticalWorkerThreads" /t REG_DWORD /d "64" /f
-
-rem # Delayed Worker Threads
+echo -- Delayed Worker Threads
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalDelayedWorkerThreads" /t REG_DWORD /d "64" /f
 
-rem # Disable Core Parking
+echo -- Disable Core Parking
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "CoreParkingDisabled" /t REG_DWORD /d "1" /f
 
 
@@ -281,11 +280,11 @@ rem # 16 threads = 4 default critical thread , 8 additional critical threads and
 rem # 32 threads = 8 default critical thread , 16 additional critical threads and 8 thread left for background processes / AdditionalCriticalWorkerThreads = 16
 
 
-rem # Enable GPU Scheduler
+echo -- Enable GPU Scheduler
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "KMD_EnableHsa" /t REG_DWORD /d "1" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "KMD_EnableHsaHws" /t REG_DWORD /d "1" /f
 
-rem # Enable CPU Affinity Optimization for GPU
+echo -- Enable CPU Affinity Optimization for GPU
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "CpuAffinityOptimization" /t REG_DWORD /d "1" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD\DXX" /v "CpuAffinityOptimization" /t REG_SZ /d "1" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD\DXC" /v "CpuAffinityOptimization" /t REG_SZ /d "1" /f
@@ -313,7 +312,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD" /v "Main3D" /t REG
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "Main3D_NA" /t REG_SZ /d "1" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD" /v "Main3D_DEF" /t REG_SZ /d "1" /f
 
-
+echo -- Shader Cache set to 3200
 rem # Shader Cache / 3000=OFF 3100=OPTIMIZED 3200=ALWAYS ON
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "ShaderCache" /t REG_BINARY /d "3200" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD" /v "ShaderCache" /t REG_BINARY /d "3200" /f
@@ -321,43 +320,40 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "ShaderCache_NA" /t
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD" /v "ShaderCache_DEF" /t REG_DWORD /d "2" /f
 
 
-rem # Disable Tablet features
+echo -- Disable Tablet features
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "TabletPostureTaskbar" /t REG_DWORD /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAutoHideInTabletMode" /t REG_DWORD /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" /v "NumThumbnails" /t REG_DWORD /d "0" /f
 
-rem # MRT tweaks
-reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d "1" /f
-reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DoNotShowFeedbackNotifications" /t REG_DWORD /d "1" /f
 
-rem # Disable Device Guard features
+echo -- Disable Device Guard features
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v "CachedDrtmAuthIndex" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v "RequireMicrosoftSignedBootChain" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v "RequirePlatformSecurityFeatures" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v "Locked" /t REG_DWORD /d "0" /f
 
-rem # Disable Mail Pins
+echo -- Disable Mail Pins
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband\AuxilliaryPins" /v "MailPin" /t REG_DWORD /d "0" /f
 
-rem # Disable Microsoft Managed Desktop Processing
+echo -- Disable Microsoft Managed Desktop Processing
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\System\AllowMicrosoftManagedDesktopProcessing" /v "value" /t REG_DWORD /d "0" /f
 
 
-rem # Disable detection of slow network connections
+echo -- Disable detection of slow network connections
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "SlowLinkDetectEnabled" /t REG_DWORD /d "0" /f
 
-rem # Delete cached copies of roaming profiles
+echo -- Delete cached copies of roaming profiles
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "DeleteRoamingCache" /t REG_DWORD /d "1" /f
 
-rem # Turn off app notifications on the lock screen
+echo -- Turn off app notifications on the lock screen
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "DisableLockScreenAppNotifications" /t REG_DWORD /d "1" /f
 
-rem # Turn off Resultant Set of Policy logging
+echo -- Turn off Resultant Set of Policy logging
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "RSoPLogging" /t REG_DWORD /d "0" /f
 
 
 
-rem # Allow Windows to automatically restart after a system crash
+echo -- Allow Windows to automatically restart after a system crash
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "AutoReboot" /t REG_DWORD /d "0" /f
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "CrashDumpEnabled" /t REG_DWORD /d "0" /f
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "EnableLogFile" /t REG_DWORD /d "0" /f
@@ -365,10 +361,10 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "A
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "LogEvent" /t REG_DWORD /d "0" /f
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl" /v "DumpLogLevel" /t REG_DWORD /d "0" /f
 
-rem # Deny Cloud access to messaging (SMS / MMS)
+echo -- Deny Cloud access to messaging (SMS / MMS)
 reg add "HKCU\SOFTWARE\Microsoft\Messaging" /v "CloudServiceSyncEnabled" /t REG_DWORD /d "0" /f
 
-rem # Windows login tweaks
+echo -- Windows login tweaks
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "ShowLogonOptions" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "DeleteRoamingCache" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "AutoRestartShell" /t REG_DWORD /d "1" /f
@@ -380,7 +376,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "WaitFor
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "SFCDisable" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "AllowMultipleTSSessions" /t REG_DWORD /d "0" /f
 
-rem # Disable Desktop Heap logging
+echo -- Disable Desktop Heap logging
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows" /v "DesktopHeapLogging" /t REG_DWORD /d "0" /f
 
 
@@ -390,17 +386,17 @@ rem reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v "NoLoc
 rem - Disable Sign-in Screen Background Image
 rem reg add "HKLM\Software\Policies\Microsoft\Windows\System" /v "DisableLogonBackgroundImage" /t REG_DWORD /d "1" /f
 
-rem 1 Disable Sign-in screen acrylic (blur) background 
+echo -- Disable Sign-in screen acrylic (blur) background 
 reg add "HKLM\Software\Policies\Microsoft\Windows\System" /v "DisableAcrylicBackgroundOnLogon" /t REG_DWORD /d "1" /f
 
 
-rem # Disable Boot Performance Diagnostics
+echo -- Disable Boot Performance Diagnostics
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Diagnostics\Performance\BootCKCLSettings" /v "Start" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Diagnostics\Performance\ShutdownCKCLSettings" /v "Start" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib" /v "Disable Performance Counters" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\ClickToRun\OverRide" /v "DisableLogManagement" /t REG_DWORD /d "1" /f
 
-rem # Disable BITS Peercaching
+echo -- Disable BITS Peercaching
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\BITS" /v "EnablePeercaching" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\BITS" /v "DisablePeerCachingClient" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\BITS" /v "DisablePeerCachingServer" /t REG_DWORD /d "1" /f
@@ -410,48 +406,48 @@ rem # Disable faster access to files and data in branch office environments
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp" /v "DisableBranchCache" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\BITS" /v "DisableBranchCache" /t REG_DWORD /d "1" /f
 
-rem # Disable Mobile Hotspot
+echo -- Disable Mobile Hotspot
 reg add "HKLM\SYSTEM\ControlSet001\Services\icssvc\Settings" /v "PeerlessTimeoutEnabled" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\ControlSet001\Services\icssvc\Settings" /v "PublicConnectionTimeout" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\icssvc\Settings" /v "PeerlessTimeoutEnabled" /t REG_DWORD /d "0" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\icssvc\Settings" /v "PublicConnectionTimeout" /t REG_DWORD /d "0" /f
 
-rem # Packet Scheduler Timer Resolution
+echo -- Packet Scheduler Timer Resolution
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched" /v "TimerResolution" /t REG_DWORD /d "1" /f
 
-rem # Packet Scheduler - Limit outstanding packets
+echo -- Packet Scheduler - Limit outstanding packets
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched" /v "MaxOutstandingSends" /t REG_DWORD /d "0" /f
 
-rem # Packet Scheduler - Limit reservable bandwidth
+echo -- Packet Scheduler - Limit reservable bandwidth
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched" /v "NonBestEffortLimit" /t REG_DWORD /d "0" /f
 
-rem # Disable Network Level Authentication
+echo -- Disable Network Level Authentication
 reg add "HKLM\System\CurrentControlSet\Services\Tcpip\QoS" /v "Do not use NLA" /t REG_SZ /d "1" /f
 
-rem # Audio tweaks
+echo -- Audio tweaks
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v "AllowHeadlessExecution" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\BackgroundAudioPolicy" /v "AllowMultipleBackgroundTasks" /t REG_DWORD /d "1" /f
 
 
 
-# Disable WinHttp Tracing
+echo -- Disable WinHttp Tracing
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp\Tracing" /v "Enabled" /t REG_DWORD /d "0" /f
 
-rem # Disable Find My Device
+echo -- Disable Find My Device
 reg add "HKLM\SOFTWARE\Policies\Microsoft\FindMyDevice" /v "LocationSyncEnabled" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\MdmCommon\SettingValues" /v "LocationSyncEnabled" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowFindMyDevice" /v "value" /t REG_DWORD /d "0" /f
 
-rem # Local users won't be able to set up and use security questions to reset their passwords
+echo -- Local users won't be able to set up and use security questions to reset their passwords
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "NoLocalPasswordResetQuestions" /t REG_DWORD /d "1" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "NoLocalPasswordResetQuestions" /t REG_DWORD /d "1" /f
 
-rem # Disable Maps
+echo -- Disable Maps
 reg add "HKLM\SYSTEM\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Maps" /v "AutoDownloadAndUpdateMapData" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Maps" /v "AllowUntriggeredNetworkTrafficOnSettingsPage" /t REG_DWORD /d "0" /f
 
-rem # Disable Messenger
+echo -- Disable Messenger
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Messenger\Client" /v "PreventAutoRun" /t REG_DWORD /d "1" /f
 
 echo. 

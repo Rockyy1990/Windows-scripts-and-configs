@@ -1,0 +1,140 @@
+
+# ========================== Software recommendations ===========================
+
+rem AntiVirus software (Avoid junk like Avast/AVG, Avira, Bitdefender, Tencent)
+rem Microsoft Defender (US) - https://www.defenderui.com - https://ibb.co/23Xs6Cjb
+rem Panda (ES) - https://www.pandasecurity.com/en/homeusers/free-antivirus - https://ibb.co/RpnWpXHJ
+
+rem AntiVirus software - additional protection (can be run alongside of realtime AV)
+rem AppCheck (KR) - https://www.checkmal.com/product/appcheck
+rem CatchPulse Lite (SG) - https://www.secureage.com/products/home-malware-protection
+rem Hard Configurator - https://github.com/AndyFul/Hard_Configurator
+rem KeyScrambler (US) - https://www.qfxsoftware.com
+
+rem Browser Extensions useful against (99% malware comes via an email or a browser)
+rem CDN (Chrome/Firefox/Opera) - https://decentraleyes.org
+rem Cookie Warnings (Chrome/Edge/Firefox) - https://www.cookie-dialog-monster.com
+rem Cookie Warnings (Chrome/Edge/Firefox) - https://www.i-dont-care-about-cookies.eu
+rem Filter Lists - https://filterlists.com
+rem Malware (Chrome/Edge) - https://github.com/Foulest/Osprey
+rem Malware (Chrome/Firefox) - https://www.bitdefender.com/solutions/trafficlight.html
+rem Malware (Chrome/Edge/Firefox) - https://microsoftedge.microsoft.com/addons/detail/emsisoft-browser-security/jlpdpddffjddlfdbllimedpemaodbjgn
+rem Phishing (Chrome/Edge/Firefox/Opera) - https://www.netcraft.com/apps/browser
+rem Phishing (Chrome/Edge/Firefox/Opera) - SafeToOpen - https://safetoopen.com
+
+rem Cleanup software
+rem Driver Store Explorer - https://github.com/lostindark/DriverStoreExplorer/releases
+rem HiBit Uninstaller - https://hibitsoft.ir
+rem Wise Disk Cleaner - https://www.wisecleaner.com/wise-disk-cleaner.html
+rem Wise Registry Cleaner - https://www.wisecleaner.com/wise-registry-cleaner.html
+
+rem Firewall software using Windows Firewall
+rem Fort Firewall (US) - https://github.com/tnodir/fort
+rem Simplewall (US) - https://github.com/henrypp/simplewall
+rem Windows Firewall Control (US) - https://www.binisoft.org/wfc.php
+
+rem Sandbox software
+rem Comodo Antivirus (US) - https://antivirus.comodo.com/free-antivirus.php
+rem Sandboxie - https://github.com/sandboxie-plus/Sandboxie
+
+rem Security cleanup software (portable on-demand scanners, some still leave traces/drivers)
+rem Antivirus Rescue Disks - https://www.techradar.com/in/best/best-antivirus-rescue-disk
+rem Dr.Web CureIt (RU) - https://free.drweb.com/download+cureit+free
+rem Emsisoft Emergency Kit (NZ) - https://www.emsisoft.com/en/home/emergency-kit
+rem Kaspersky Virus Removal Tool (RU) - https://www.kaspersky.com/downloads/free-virus-removal-tool
+rem Microsoft Safety Scanner (US) - https://learn.microsoft.com/en-us/defender-endpoint/safety-scanner-download
+
+rem Security cleanup software (online/updatable on-demand scanners)
+rem ESET Online Scanner (SK) - https://www.eset.com/us/home/online-scanner
+rem F-Secure Online Scanner (US) - https://www.f-secure.com/en/home/free-tools/online-scanner
+rem Norton Power Eraser (US) - https://support.norton.com/sp/static/external/tools/npe.html
+rem Panda Cloud Cleaner (ES) - https://www.pandasecurity.com/en/homeusers/cloud-cleaner
+rem Sophos Scan & Clean alas HitmanPro (UK) - https://www.sophos.com/en-us/free-tools/virus-removal-tool
+rem Trend Micro HouseCall (US) - https://www.trendmicro.com/en_us/forHome/products/housecall.html
+
+rem Software
+rem 2FA / 2fast - two factor authenticator supporting TOTP - https://apps.microsoft.com/store/detail/2fast-%E2%80%93-two-factor-authenticator-supporting-totp/9P9D81GLH89Q
+
+rem Application Updates / App Installer (winget) - https://www.microsoft.com/en-us/p/app-installer/9nblggh4nns1#activetab=pivot:overviewtab
+rem Application Updates / App Installer GUI (winget) - https://www.marticliment.com/wingetui - https://winget.run
+
+rem Bandwidth Meter / NetTraffic - https://www.venea.net/web/nettraffic
+rem Bandwidth Monitor / TrafficMonitor - https://github.com/zhongyang219/TrafficMonitor/blob/master/README_en-us.md
+rem Bootable USB / Rufus - https://apps.microsoft.com/store/detail/rufus/9PC3H3V7Q9CH?hl=en-us&gl=US
+rem Bootloader / EasyUEFI - https://www.softpedia.com/get/System/Boot-Manager-Disk/EasyUEFI.shtml
+
+rem Browser / Brave - https://brave.com - Great for Google/Youtube only
+rem Browser / LibreWolf - https://librewolf.net - Great for privacy, like for Facebook
+rem Browser / TOR - https://www.torproject.org - Set Settings to Safest to disable all javascripts for max privacy/security!
+
+rem Cloud Backup / IceDrive - https://icedrive.net/plans
+rem Cloud Backup / IDrive - https://www.idrive.com/pricing
+rem Cloud Backup / PolarBackup - https://www.polarbackup.com/#pricing
+
+rem Compact/Compress Files / Compact GUI - https://github.com/ImminentFate/CompactGUI
+rem Computer Management / NirLauncher - https://launcher.nirsoft.net
+rem CPU Info / CPU-Z - https://www.cpuid.com/softwares/cpu-z.html
+rem CPU Test / Prime95 - https://www.mersenne.org/download
+rem Data Recovery / EaseUS Data Recovery Wizard - https://www.easeus.com/datarecoverywizard/free-data-recovery-software.htm
+rem Directx 9.0 Runtimes / DirectX Redistributable June 2010 - https://www.softpedia.com/get/System/OS-Enhancements/DirectX-9.0c-Redistributable.shtml
+rem Disk Info / CrystalDiskInfo - https://crystalmark.info/en/software/crystaldiskinfo
+rem Disk Scan / HDDScan - https://hddscan.com
+rem Disk Space Usage / WizTree - https://wiztreefree.com
+rem Disk Surface Test / Macrorit Disk Scanner - https://macrorit.com/disk-surface-test/disk-surface-test.html
+rem DVD to MKV / MakeMKV Beta - https://www.makemkv.com/download / Key - https://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
+rem eMail / SimpleLogin - https://simplelogin.io/pricing
+rem eMail Client / POP Peeper - https://www.esumsoft.com/products/pop-peeper
+rem eMail Client / Mailbird - https://www.getmailbird.com
+rem File Archiver / NanaZip - https://www.microsoft.com/en-us/p/nanazip/9n8g7tscl18r?activetab=pivot:overviewtab
+rem Folder View Globally Set / WinSetView - https://github.com/LesFerch/WinSetView
+rem GPU Info / GPU-Z - https://www.techpowerup.com/gpuz
+rem GPU Test / Furmark - https://geeks3d.com/furmark
+rem Hardware Information / HWiNFO - https://www.hwinfo.com/download.php
+rem Hardware Monitor / HWMonitor - https://www.cpuid.com/softwares/hwmonitor.html
+rem Image Viewer / XnView - https://www.xnview.com/en/xnview/#downloads
+rem Media Player / MPC-BE - https://sourceforge.net/projects/mpcbe
+rem Monitor Test / https://www.testufo.com
+rem Network Optimization / TCP Optimizer - https://www.speedguide.net/downloads.php
+rem Network Settings Manager / NetSetMan - https://www.netsetman.com/en/freeware
+rem Notepad / Notepad3 - https://www.rizonesoft.com/downloads/notepad3
+rem Office Suite / LibreOffice - https://www.libreoffice.org
+rem Partition Manager / Macrorit Partition Expert - https://macrorit.com/partition-magic-manager/free-edition.html
+rem Password Generator / Strong Password Generator - https://apps.microsoft.com/store/detail/strong-password-generator/9NNKGKL4V8HV?hl=en-us&gl=us
+rem Password Manager (Offline) / KeePass Professional Edition - https://keepass.info/download.html
+rem Password Manager (Online) / Bitwarden - https://bitwarden.com
+rem PDF Editor / FreePDF - https://www.getfreepdf.com
+rem PDF Viewer / Sumatra PDF - https://www.sumatrapdfreader.org/free-pdf-reader.html
+rem Performance / LatencyMon - https://www.resplendence.com/latencymon
+rem Performance / HoneCtrl - https://github.com/auraside/HoneCtrl/releases
+rem Performance / Process Lasso - https://bitsum.com
+rem Performance / WhySoSlow - https://www.resplendence.com/whysoslow
+rem Performance / Windows System Timer Tool - https://vvvv.org/contribution/windows-system-timer-tool
+rem Permissions / Reset permissions/Take Ownership - http://lallouslab.net/2013/08/26/resetting-ntfs-files-permission-in-windows-graphical-utility/
+rem Process Monitor / Process Monitor - https://docs.microsoft.com/en-us/sysinternals/downloads/procmon
+rem Radio / Audials Play - https://apps.microsoft.com/store/detail/audials-play-radio-music-tv-podcasts/9PGFN1FJM5TL?hl=en-us&gl=us
+rem RAM Fix / Intelligent standby list cleaner (+Timer Resolution) - https://www.wagnardsoft.com/content/intelligent-standby-list-cleaner-v1000-released
+rem RAM Free (Memory Leak) / Mem Reduct - https://www.henrypp.org/product/memreduct
+rem RAM Free (Memory Leak) / Wise Memory Optimizer - https://www.wisecleaner.com/wise-memory-optimizer.html
+rem RAM Disk / ImDisk Toolkit (Unlimited/Unsigned) - https://sourceforge.net/projects/imdisk-toolkit
+rem RAM Test / Memtest (run one process per each 2GB) - https://hcidesign.com/memtest
+rem Remote Support / TeamViewer - https://www.teamviewer.com/en/download/windows
+rem Remove Locked File/Folder / ThisIsMyFile - https://www.softwareok.com/?seite=Freeware/ThisIsMyFile
+rem Search / UltraSearch - https://www.jam-software.com/ultrasearch_free
+rem Startup Manager / Autoruns - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+rem Streaming / XSplit - https://www.xsplit.com
+
+rem System Imaging / Hasleo Backup Suite - https://www.easyuefi.com/backup-software/backup-suite-free.html
+rem System Restore / Reboot Restore Rx - https://horizondatasys.com/reboot-restore-rx-freeware
+
+rem Task Manager / System Informer - https://www.systeminformer.com/canary
+rem Taskbar Overall / ExplorerPatcher - https://github.com/valinet/ExplorerPatcher
+rem Taskbar Translucent / TranslucentTB - https://www.microsoft.com/en-us/p/translucenttb/9pf4kz2vn4w9?activetab=pivot:overviewtab
+rem Uninstaller / HiBit Uninstaller - https://hibitsoft.ir - https://www.techsupportalert.com/best-free-program-un-installer.htm
+rem VM Android / BlueStacks - https://www.bluestacks.com
+rem VPN / Proton VPN - https://protonvpn.com
+
+rem Wallpaper / Rainmeter - https://www.rainmeter.net
+rem Wallpaper / Wallpaper Engine - https://store.steampowered.com/app/431960
+
+rem Windows Tweaks on GitHub - https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md#-
+

@@ -10,12 +10,14 @@ echo --------------------------
 echo Discord
 echo Putty
 echo Rufus (USB Tool)
-echo Notepad++
+:: echo Notepad++
+echo Notepad3
 echo WPU (Wise Program Uninstaller)
 echo Wise Disk Cleaner
 echo Wise Registry Cleaner
 :: echo Vivaldi Browser
 :: echo Firefox Browser
+:: echo XnView (Image Viewer)
 echo SMPlayer
 echo Steam Gaming Platform
 echo yt-dlp
@@ -41,6 +43,8 @@ if %errorLevel% == 0 (
 )
 
 winget upgrade
+winget install Microsoft.AppInstaller --accept-package-agreements --accept-source-agreements
+
 
 echo Installing Discord...
 winget install -e --id Discord.Discord -h
@@ -56,9 +60,13 @@ echo Installing Rufus...
 winget install -e --id Rufus.Rufus -h
 echo Rufus installation completed.
 
-echo Installing Notepad++...
-winget install -e --id Notepad++.Notepad++
-echo Notepad++ installation completed.
+:: echo Installing Notepad++...
+:: winget install -e --id Notepad++.Notepad++
+:: echo Notepad++ installation completed.
+
+echo Installing Notepad3...
+winget install Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements
+echo Notepad3 install complete.
 
 echo Installing WPU...
 winget install -e --id WiseCleaner.WiseProgramUninstaller
@@ -79,6 +87,10 @@ echo wise registry cleaner complete.
 :: echo Installing Firefox Browser...
 :: winget install -e --id=Mozilla.Firefox 
 :: echo Firefox Browser installation completed.
+
+echo Installing XnView...
+winget install XnSoft.XnView.Classic --accept-package-agreements --accept-source-agreements
+echo XnView install complete.
 
 echo Installing SMPlayer...
 winget install -e --id SMPlayer.SMPlayer

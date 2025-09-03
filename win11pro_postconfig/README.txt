@@ -36,6 +36,9 @@ https://uupdump.net/
 # https://uup.rg-adguard.net/
 # https://files.rg-adguard.net/category
 
+# Optimized Windows 11 ISOs
+https://windowsxlite.com 
+
 # News for windows (and win11,10 isos with latest updates)
 https://deskmodder.de/
 
@@ -111,10 +114,10 @@ https://github.com/ventoy/Ventoy/releases
 :: https://n1kobg.blogspot.com  
 
 :: https://sites.google.com/site/tweakradje/windows/windows-tweaking  
+:: https://forums.mydigitallife.net/forums/windows-11.64
 :: https://sites.google.com/view/melodystweaks/  
 :: https://someonewhocares.org/hosts 
-:: https://windowsxlite.com 
-:: https://forums.mydigitallife.net/forums/windows-11.64 
+  
 
 :: https://steamcommunity.com/app/1364780/discussions/0/4626979978390549499  
 :: https://steamcommunity.com/sharedfiles/filedetails/?id=476760198  
@@ -129,12 +132,12 @@ https://github.com/ventoy/Ventoy/releases
 
 ( Info: The CMD or Windows Terminal must be run with elevated rights to run system tasks !!)
 
+# Apps - FixWin           - https://www.thewindowsclub.com/fixwin-windows-pc-repair-software
+# Windows Drivers         - https://www.catalog.update.microsoft.com
+# Windows Repair Install  - https://www.elevenforum.com/t/repair-install-windows-11-with-an-in-place-upgrade.418
+# Windows Update Reset    - https://github.com/ManuelGil/Reset-Windows-Update-Tool/releases
+# Windows Repair Toolbox  - https://windows-repair-toolbox.com
 
-# Apps - FixWin          - https://www.thewindowsclub.com/fixwin-windows-pc-repair-software
-# Windows Drivers        - https://www.catalog.update.microsoft.com
-# Windows Repair Install - https://www.elevenforum.com/t/repair-install-windows-11-with-an-in-place-upgrade.418
-# Windows Update Reset   - https://github.com/ManuelGil/Reset-Windows-Update-Tool/releases
-# Windows Repair Toolbox - https://windows-repair-toolbox.com
 
 
 # Using winget (windows package manager)
@@ -178,7 +181,6 @@ dism /Online /Cleanup-Image /StartComponentCleanup /ResetBase /Quiet
 
 
 # Fix boot - (https://neosmart.net/wiki/bootrec/#Bootrec_in_Windows10)
-
 bootrec / fixmbr
 bootrec / fixboot
 bootrec / rebuildbcd
@@ -208,6 +210,7 @@ net user NewGuy * /add
 net localgroup Administrators NewGuy /add
 
 
+
 # Performance - Settings - Advanced - Virtual memory
 # Disable pagefile (use it only with 32gb or more ram !!)
 
@@ -217,6 +220,7 @@ DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
 wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
 wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
+
 
 
 # Force update Group Policies 
@@ -231,10 +235,10 @@ label C: System
 del /s /f /q c:\windows\temp\*.*
 del /s /f /q C:\WINDOWS\Prefetch
 
-
 # Disable Windows Recovery Partition
 reagentc /info
 reagentc /disable
+
 
 # Change dns (primary and secondary) over cmd / windows terminal
 netsh interface ipv4 set dns name=%INTERFACE_NAME% static 8.8.8.8 primary
@@ -242,7 +246,6 @@ netsh interface ipv4 add dns name=%INTERFACE_NAME% 1.1.1.1 index=2
 
 
 # Change Powerplan for screen and pc (pc sleep after 36min and screen turned of after 24 min)
-
 # Turn off my screen after 24 minutes (ac-plugged in)
 powercfg -change -monitor-timeout-ac 24
 powercfg -change -monitor-timeout-dc 24
@@ -251,6 +254,7 @@ powercfg -change -monitor-timeout-dc 24
 powercfg -change -standby-timeout-ac 36
 powercfg -change -standby-timeout-dc 36
 
+  ------------------------------------------------------------------------------------
 
 # Bios/UEFI Settings
 

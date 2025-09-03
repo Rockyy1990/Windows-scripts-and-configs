@@ -1,7 +1,7 @@
 @echo off 
 
 echo.
-echo These are optional Tweaks. Can be skipped.
+echo These are optional Tweaks. 
 echo.
 echo Disable reserved disk space for windows updates
 echo Disable smb 1.0 and smb 2.0
@@ -31,19 +31,6 @@ reg add "HKLM\Software\Policies\Microsoft\Windows\CloudContent" /v "DisableWindo
 :: Disable WPP Software Tracing Logs
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\WUDF" /v "LogEnable" /t REG_DWORD /d "0" /f >NUL 2>&1
 reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\WUDF" /v "LogLevel" /t REG_DWORD /d "0" /f >NUL 2>&1
-
-:: Turn off Microsoft Peer-to-Peer Networking Services
-reg add "HKLM\Software\Policies\Microsoft\Peernet" /v "Disabled" /t REG_DWORD /d "0" /f >NUL 2>&1
-
-:: Turn off Data Execution Prevention
-reg add "HKLM\Software\Policies\Microsoft\Internet Explorer\Main" /v "DEPOff" /t REG_DWORD /d "1" /f >NUL 2>&1
-
-
-:: Mouse Settings
-reg add "HKCU\Control Panel\Mouse" /v "MouseSensitivity" /t REG_SZ /d "10" /f >NUL 2>&1
-reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >NUL 2>&1
-reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >NUL 2>&1
-reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >NUL 2>&1
 
 
 :: Disable automatic folder type discovery
@@ -246,12 +233,12 @@ setx GPU_FORCE_64BIT_PTR "0" /M
 
 
 rem Turn off my screen after 25 minutes (ac-plugged in)
-powercfg -change -monitor-timeout-ac 25
-powercfg -change -monitor-timeout-dc 25
+powercfg -change -monitor-timeout-ac 24
+powercfg -change -monitor-timeout-dc 24
 
 rem Put my device to sleep after 30 minutes (ac-plugged in)
-powercfg -change -standby-timeout-ac 35
-powercfg -change -standby-timeout-dc 35
+powercfg -change -standby-timeout-ac 36
+powercfg -change -standby-timeout-dc 36
 
 
 REM Config various windows services..

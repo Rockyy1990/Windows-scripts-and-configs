@@ -1,0 +1,46 @@
+Ausführen eines Post-Install-Skripts nur mit `echo`-Ausgaben sichtbar, 
+während alle Befehle wie `apt install` im Hintergrund ausgeführt werden und deren Ausgaben nicht angezeigt werden.
+Hierzu kann man die die Befehle im Skript entsprechend umleiten oder im Hintergrund ausführen.
+
+Hier ein Beispiel, wie du das machen könntest:
+
+```bash
+#!/bin/bash
+
+# Zeige nur echo-Ausgaben
+echo "Starte Installation..."
+
+# Installiere Pakete im Hintergrund und leite die Ausgaben ins Leere um
+apt-get install -y paket1 paket2 > /dev/null 2>&1 &
+
+# Optional: Warte, bis der Hintergrundprozess fertig ist
+wait
+
+echo "Installation abgeschlossen."
+```
+
+Alternativ kannst du die `apt-get`-Befehle direkt in einer Zeile ausführen und ihre Ausgaben unterdrücken:
+
+```bash
+apt-get install -y paket1 paket2 > /dev/null 2>&1
+```
+
+Wenn du möchtest, dass die Befehle im Hintergrund laufen, kannst du sie mit `&` ausführen. Beachte jedoch, 
+dass es bei Skripten, die bei der Post-Installation ausgeführt werden, manchmal besser ist, alle Schritte sequenziell ablaufen zu lassen, 
+um Fehler besser erkennen zu können.
+
+---
+
+**Kurz zusammengefasst:**
+
+- Um nur `echo`-Ausgaben anzuzeigen, kannst du die tatsächlichen Befehle in deinem Skript umleiten:
+  
+  ```bash
+  apt-get install -y paket1 paket2 > /dev/null 2>&1
+  ```
+  
+- Für eine asynchrone Ausführung kannst du `&` verwenden, um den Befehl im Hintergrund laufen zu lassen.
+
+**Hinweis:** Es ist ratsam, die Hintergrundprozesse nach Bedarf zu synchronisieren (`wait`),
+ um sicherzustellen, dass alle Installationen abgeschlossen sind, bevor das Skript endet.
+

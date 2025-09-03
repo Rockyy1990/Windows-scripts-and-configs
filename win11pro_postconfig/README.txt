@@ -1,5 +1,5 @@
 
-# Last Edit: 02.09.2025
+# Last Edit: 03.09.2025
 
 -------------------
   Useful links
@@ -39,6 +39,12 @@ https://uupdump.net/
 # News for windows (and win11,10 isos with latest updates)
 https://deskmodder.de/
 
+# Windows Tweaker (Optimize Windows 11)
+https://github.com/Teramanbr/TerabyteTweaker
+
+# Windows 10/11 Privacy tools
+https://www.oo-software.com/en/shutup10
+https://www.w10privacy.de
 
 # Creating an answer file for windows auto install
 https://schneegans.de/windows/unattend-generator/
@@ -48,18 +54,73 @@ https://github.com/ventoy/Ventoy/releases
 
 
 ; Github Repositorys (Windows 10,11 tweaks)
-# https://github.com/Batleman
 # https://github.com/AlchemyTweaks
-# https://github.com/TairikuOokami
-# https://github.com/ionuttbara
-# https://github.com/Hyyote
 # https://github.com/MoriEdan
-# https://github.com/NicholasBly
 # https://github.com/rahilpathan
-# https://github.com/ChrisTitusTech
 # https://github.com/simeononsecurity
 # https://github.com/alufena
 # https://github.com/shoober420
+# https://github.com/ancel1x/Ancels-Performance-Batch  
+# https://github.com/andrew-s-taylor/public  
+# https://github.com/arcadesdude/BRU  
+# https://github.com/Batlez/Batlez-Tweaks  
+# https://github.com/BoringBoredom/PC-Optimization-Hub  
+# https://github.com/ChrisTitusTech/winutil  
+# https://github.com/DaddyMadu/Windows10GamingFocus  
+# https://github.com/denis-g/windows10-latency-optimization  
+# https://github.com/djdallmann/GamingPCSetup  
+# https://github.com/dubbyOW/BCDEditTweaks  
+# https://github.com/emadadel4/itt  
+# https://github.com/FR33THYFR33THY/Ultimate-Windows-Optimization-Guide  
+# https://github.com/HakanFly/Windows-Tweaks  
+# https://github.com/henrypp/memreduct  
+# https://github.com/HickerDicker/SapphireOS  
+# https://github.com/Hyyote/files-  
+# https://github.com/Hyyote/In-depth-Windows-tweaking  
+# https://github.com/Invertex/RemoveRazerGameManager  
+# https://github.com/ionuttbara/melody_windows  
+# https://github.com/ionuttbara/windows-defender-remover  
+# https://github.com/jawsk10/Windows-Tweak-by-Jawsk  
+# https://github.com/Khorvie-Tech/khorvie-tech.github.io  
+# https://github.com/letsdoautomation/powershell  
+# https://github.com/LuSlower/dwm-basic  
+# https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md  
+# https://github.com/miniant-git/REAL  
+# https://github.com/MrGrappleMan/Fynelium-NT  
+# https://github.com/NicholasBly/Windows-11-Latency-Optimization  
+# https://github.com/Orbmu2k/nvidiaProfileInspector  
+# https://github.com/QuakedK/Oneclick  
+# https://github.com/QuakedK/Scripting-Station  
+# https://github.com/rahilpathan/Tweaks-for-Gaming.bat  
+# https://github.com/rahilpathan/Win10Boost  
+# https://github.com/ran-sama/firefox-preferences  
+# https://github.com/Raphire/Win11Debloat  
+# https://github.com/ShadowWhisperer/Remove-MS-Edge  
+# https://github.com/Sheikh98-DEV/Windows-Optimizer  
+# https://github.com/simeononsecurity/Windows-Optimize-Debloat  
+# https://github.com/simeononsecurity/Windows-Optimize-Harden-Debloat  
+# https://github.com/SLStyler/Dithering-for-Windows-Simple-BAT-  
+# https://github.com/spddl/GoInterruptPolicy  
+# https://github.com/spddl/LowAudioLatency  
+# https://github.com/Syrusaki/Melody-s-automated-script-from-video  
+# https://github.com/TairikuOokami/Windows  
+# https://github.com/Xiseous/PC-Tuning  
+# https://github.com/zoicware/ZOICWARE  
+
+:: https://khorvie.tech/library  
+:: https://n1kobg.blogspot.com  
+
+:: https://sites.google.com/site/tweakradje/windows/windows-tweaking  
+:: https://sites.google.com/view/melodystweaks/  
+:: https://someonewhocares.org/hosts 
+:: https://windowsxlite.com 
+:: https://forums.mydigitallife.net/forums/windows-11.64 
+
+:: https://steamcommunity.com/app/1364780/discussions/0/4626979978390549499  
+:: https://steamcommunity.com/sharedfiles/filedetails/?id=476760198  
+:: https://steamcommunity.com/sharedfiles/filedetails/?id=1123728480  
+:: https://steamcommunity.com/sharedfiles/filedetails/?id=3439639950  
+
 
 
 #
@@ -198,7 +259,7 @@ Disable CPU Spread Spectrum     - Can improve system performance
 Enable  CPU Resizable BAR       - Improve performance (Direct access to gpu memory)
 Disable CPU Boost settings	    - More system stability
 Disable     IOMMU
-Disable CPU SVM                 
+Disable CPU SVM                 - Virtualization. If you dont need that you can disable it
 Disable CPU TPM (fTPM)          - If you use win11 you must disable the hardware checks. (bypass cpu,tpm)
 Disable UEFI Secure Boot        - If you use win11 you must disable secure boot check
 Disable FCH Spread Spectrum
@@ -210,7 +271,7 @@ PCIe ARI Support -> Auto
 PCIe ARI Enumeration -> Auto
 PCIe Spread Spectrum Clocking -> Disabled
 
-USB Power down after PC shutdown (One of the 3 entries. Depend on UEFI/Bios)
+USB Power down after PC shutdown (One of the 3 entries. Depend on your UEFI/Bios)
 USB Power Delivery in Soft Off State -> disable
 ErP Ready -> disable
 Deep Sleep / USB Power share -> disable

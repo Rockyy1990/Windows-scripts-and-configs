@@ -1,0 +1,34 @@
+Um Fehler in einem Bash-Script zu finden, ohne es tatsächlich auszuführen, kannst du folgende Methoden verwenden:
+
+1. **Shell-Optionen zum Debuggen aktivieren:**
+   - `bash -n script.sh`  
+     Prüft die Syntax des Scripts, ohne es auszuführen. Falls Fehler vorhanden sind, werden sie angezeigt.
+   
+2. **Debug-Modus während der Ausführung:**
+   - `bash -x script.sh`  
+     Führt das Script aus, zeigt aber jeden Befehl vor der Ausführung an, was bei der Fehlersuche hilfreich ist.
+   
+3. **Shell-Options innerhalb des Scripts setzen:**
+   - Füge am Anfang des Scripts folgende Zeile ein, um eine detaillierte Ausgabe zu erhalten:
+     ```bash
+     set -x
+     ```
+   - Oder um Syntaxfehler zu erkennen, ohne das Script auszuführen:
+     ```bash
+     bash -n script.sh
+     ```
+
+4. **Linter-Tools verwenden:**
+   Es gibt externe Tools wie `shellcheck`, die dein Script analysieren und auf mögliche Fehler, 
+   schlechte Praktiken oder potenzielle Probleme hinweisen.
+
+   Beispiel:
+   ```bash
+   shellcheck script.sh
+   ```
+
+**Fazit:**  
+Mit `bash -n` kannst du die Syntax prüfen, ohne das Script auszuführen.
+Mit `bash -x` kannst du eine simulierte Ausführung mit detaillierter Ausgabe durchführen. 
+Zusätzlich hilft der Einsatz von Tools wie `shellcheck`, um Fehler frühzeitig zu erkennen.
+

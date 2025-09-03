@@ -5,8 +5,7 @@ echo ---------------------------------
 echo Postconfig after windows install.
 echo ---------------------------------
 echo.
-
-timeout 5
+pause
 
 openfiles >nul 2>&1
 if %errorlevel% neq 0 (
@@ -29,10 +28,10 @@ dism /online /Remove-Capability /CapabilityName:Browser.InternetExplorer~~~~0.0.
 echo -- Disabling Fax and Scan
 dism /Online /Disable-Feature /FeatureName:FaxServicesClientPackage
 
-echo -- Disable reserved storage space
+:: Disable reserved storage space
 DISM /Online /Set-ReservedStorageState /State:Disabled
 
-echo -- Disabe Recall function
+:: Disabe Recall function
 DISM /Online /Disable-Feature /FeatureName:"Recall"
 
 echo -- Removing Copilot
@@ -297,6 +296,7 @@ reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "8" /f
 reg add "HKCU\Control Panel\Desktop" /v "WaitToKillAppTimeout" /t REG_SZ /d "2000" /f
 reg add "HKCU\Control Panel\Desktop" /v "LowLevelHooksTimeout" /t REG_SZ /d "1000" /f
 
+
 echo -- Disable show recommendations in Explorer
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecommendations" /t REG_DWORD /d 0 /f
 
@@ -312,13 +312,16 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScr
 echo -- Disable fast startup / hiberboot
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v FastStartup /t REG_DWORD /d 0 /f
 
-echo -- Disable User profile engagement
+echo -- User profile engagement
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement" /v "ScoobeSystemSettingEnabled" /t REG_DWORD /d 0 /f
+
+echo -- Disable Malware Removal Tool
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f
 
 echo -- Disable Malware Reporting
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f
 
-echo -- Enable show old Explorer Ribbon
+echo -- Enable Old Explorer Ribbon
 reg add "HKCU\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}" /ve /t REG_SZ /d "CLSID_ItemsViewAdapter" /f
 reg add "HKCU\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InProcServer32" /ve /t REG_SZ /d "C:\Windows\System32\Windows.UI.FileExplorer.dll_" /f
 reg add "HKCU\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InProcServer32" /v "ThreadingModel" /t REG_SZ /d "Apartment" /f
@@ -349,11 +352,11 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "S
 echo -- Show Sync Provider Notifications in Windows Explorer (ADs)
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowSyncProviderNotifications" /t REG_DWORD /d "0" /f
 
-rem 1 - Use Sharing Wizard
+echo -- Use Sharing Wizard
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "SharingWizardOn" /t REG_DWORD /d "0" /f
 
 
-echo -- All of the components of Windows Explorer run a single process / 1 - All instances of Windows Explorer run in one process and the Desktop and Taskbar run in a separate process
+rem 0 - All of the components of Windows Explorer run a single process / 1 - All instances of Windows Explorer run in one process and the Desktop and Taskbar run in a separate process
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "DesktopProcess" /t REG_DWORD /d "1" /f
 
 rem Yes - Use Inline AutoComplete in File Explorer and Run Dialog / No
@@ -362,7 +365,7 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete" /
 rem 0 - Do this for all current items checkbox / 1 - Disabled
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "ConfirmationCheckBoxDoForAll" /t REG_DWORD /d "0" /f
 
-echo -- Always show more details in copy dialog
+rem 1 - Always show more details in copy dialog
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "EnthusiastMode" /t REG_DWORD /d "0" /f
 
 echo -- Disable Previous Version Tab
@@ -382,8 +385,6 @@ reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs" /v "HasLUAShield" /d "" /f
 reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs\Command" /ve /d "cmd /k dism /online /add-package /packagepath:\"%1\"" /f
 
 
-echo -- Disabling Windows Media Player
-powershell -Command "try { Disable-WindowsOptionalFeature -FeatureName "WindowsMediaPlayer" -Online -NoRestart -ErrorAction Stop; Write-Output "Successfully disabled the feature WindowsMediaPlayer." } catch { Write-Output "Feature not found." }"
 
 echo -- Enable WMIC
 DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
@@ -400,7 +401,6 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Sn
 
 
 rem --- Hide Gallery on Navigation Pane ---
-
 rem Add registry key to hide Gallery in Navigation Pane
 reg add "HKU\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /v "HideGalleryExplorer" /t REG_SZ /d "
 reg add HKCU\\Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c} /v System.IsPinnedToNameSpaceTree /t REG_DWORD /d 0 /f" /f
@@ -409,7 +409,6 @@ rem Create the CLSID key and set the value to hide the Gallery
 reg add "HKU\.DEFAULT\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f
 
 rem --- Add 'Show Gallery' option to File Explorer folder options ---
-
 rem Set default value for ShowGallery in HKLM, under the specified path
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery" /v "CheckedValue" /t REG_DWORD /d 1 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery" /v "DefaultValue" /t REG_DWORD /d 0 /f
@@ -434,14 +433,14 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v ScanWithAntiVirus /t REG_DWORD /d 1 /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v UseTrustedHandlers /t REG_DWORD /d 1 /f
 
-echo -- Set LowRiskFileTypes under HKCU
+REM Set LowRiskFileTypes under HKCU
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Associations" /v LowRiskFileTypes /t REG_SZ /d ".exe;.msi;.bat;.cmd;.vbs;.ps1;.py;.h;.c;.cs;.vb;.vcproj;.vcxproj;.htm;.html;.php;.cgi;.nfo;.txt;.ini;.inf;.reg;.cfg;.json;.config;.zip;.rar;.7z;.iso;.bmp;.jpg;.jpeg;.gif;.png;.webp;.heic;.mp2;.mp3;.mpg;.avi;.mpeg;.mov;.wmv;.mp4;.mkv;.m3u;.wav;.ogg;.flac" /f
 
 REM Configure Internet Explorer download settings
 reg add "HKCU\Software\Microsoft\Internet Explorer\Download" /v CheckExeSignatures /t REG_SZ /d no /f
 reg add "HKCU\Software\Microsoft\Internet Explorer\Download" /v RunInvalidSignatures /t REG_DWORD /d 1 /f
 
-REM Set Defender to only monitor "incoming" files
+echo -- Set Defender to only monitor "incoming" files
 reg add "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" /v RealtimeScanDirection /t REG_DWORD /d 1 /f
 
 
@@ -460,7 +459,7 @@ reg add "HKEY_CLASSES_ROOT\AllFilesystemObjects\shell\Windows.PermanentDelete" /
 reg add "HKEY_CLASSES_ROOT\AllFilesystemObjects\shell\Windows.PermanentDelete" /v Icon /t REG_SZ /d "shell32.dll,-240" /f
 reg add "HKEY_CLASSES_ROOT\AllFilesystemObjects\shell\Windows.PermanentDelete" /v Position /t REG_SZ /d "Bottom" /f
 
-echo -- Enable insecure guest logons
+echo -- Enable SMB insecure guest logons
 reg add "HKLM\System\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v AllowInsecureGuestAuth /t REG_DWORD /d 1 /f
 
 echo -- Disable SMB signing requirement
@@ -511,18 +510,14 @@ POWERSHELL Disable-MMAgent -MemoryCompression -ApplicationPreLaunch -ErrorAction
 echo -- Disable additional NTFS/ReFS mitigations
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager" /v "ProtectionMode" /t REG_DWORD /d "0" /f 
 
-:: Specifies the Wake Policy of LPC controllers during activity for the best possible latency
-REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager" /v "AlpcWakePolicy" /t REG_DWORD /d "1" /f >NUL 2>&1
+echo -- Specifies the Wake Policy of LPC controllers during activity for the best possible latency
+REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager" /v "AlpcWakePolicy" /t REG_DWORD /d "1" /f 
 
 echo -- Drivers and the kernel can be paged to disk as needed
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "DisablePagingExecutive" /t REG_DWORD /d "1" /f 
 
 echo -- Using big system memory caching to improve microstuttering
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "LargeSystemCache" /t REG_DWORD /d "1" /f 
-
-echo -- GPU Optimizations
-REG ADD "HKLM\System\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "EnablePreemption" /t REG_DWORD /d "1" /f 
-REG ADD "HKLM\System\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "VsyncIdleTimeout" /t REG_DWORD /d "0" /f
 
 
 echo -- Multimedia Profile
@@ -582,31 +577,31 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProf
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Window Manager" /v "Priority When Yielded" /t REG_DWORD /d 19 /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Window Manager" /v "BackgroundPriority" /t REG_DWORD /d 8 /f >NUL 2>&1
 
-echo -- Process Scheduling
-REG ADD "HKLM\System\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "40" /f 
+echo -- Set Process Scheduling to 38
+REG ADD "HKLM\System\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "38" /f 
 
-echo -- Disable downloads blocking
+:: Disable downloads blocking
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f 
 
 echo -- Disable malicious software removal tool from installing
 REG ADD "HKLM\Software\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d "1" /f 
 
-echo -- Set UseCompactMode to 1 
+echo -- Enable UseCompactMode 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseCompactMode /t REG_DWORD /d 1 /f 
 
 echo -- Disable DMA Protection
-reg add "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 0 /f >NUL 2>&1
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 0 /f >NUL 2>&1
+reg add "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 0 /f 
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" /v DeviceEnumerationPolicy /t REG_DWORD /d 0 /f >
 
 rem Remove 3D objects from file explorer
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" /f >NUL 2>&1
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}" /f >NUL 2>&1
 
-REM Disable Virtual Desktops Taskbar Filter
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v VirtualDesktopTaskbarFilter /t REG_DWORD /d 0 /f >NUL 2>&1
+echo -- Disable Virtual Desktops Taskbar Filter
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v VirtualDesktopTaskbarFilter /t REG_DWORD /d 0 /f 
 
-REM Disable Virtual Desktops Alt-Tab Filter
-reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v VirtualDesktopAltTabFilter /t REG_DWORD /d 0 /f >NUL 2>&1
+echo -- Disable Virtual Desktops Alt-Tab Filter
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v VirtualDesktopAltTabFilter /t REG_DWORD /d 0 /f 
 
 echo -- Disable Logon Background Image
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v "DisableLogonBackgroundImage" /t REG_DWORD /d 1 /f 
@@ -618,54 +613,47 @@ echo -- Enable Sudo
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo" /v "Enabled" /t REG_DWORD /d 1 /f 
 
 
-echo -- Disable downloading MRT 
+echo -- Set registry values for MRT policies
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DoNotShowFeedbackNotifications" /t REG_DWORD /d 1 /f 
 
 echo -- Disable Protected Renames in DNS Cache Service
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters" /v "DisableProtectedRenames" /t REG_DWORD /d 1 /f >NUL 2>&1
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters" /v "DisableProtectedRenames" /t REG_DWORD /d 1 /f 
 
 echo -- Hide Recently Added Apps
 reg delete "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v "HideRecentlyAddedApps" /f 
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "HideRecentlyAddedApps" /t REG_DWORD /d 1 /f 
 
 echo -- Disable Recommended Tips, Shortcuts, New Apps, and more on Start Menu
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_IrisRecommendations" /t REG_DWORD /d "0" /f >NUL 2>&1
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Start_IrisRecommendations" /t REG_DWORD /d "0" /f 
 
 echo -- Disable Most Used Apps on Start Menu
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoStartMenuMFUprogramsList" /t REG_DWORD /d "1" /f 
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoStartMenuMFUprogramsList" /t REG_DWORD /d "1" /f
 
 echo -- Disable File History
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\FileHistory" /v "Disabled" /t REG_DWORD /d "1" /f 
 
 echo -- Disallow publishing of User Activities
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /t REG_DWORD /d "0" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "PublishUserActivities" /t REG_DWORD /d "0" /f 
+
+echo -- Turn off Microsoft Peer-to-Peer Networking Services
+reg add "HKLM\Software\Policies\Microsoft\Peernet" /v "Disabled" /t REG_DWORD /d "0" /f 
+
+echo -- Turn off Data Execution Prevention
+reg add "HKLM\Software\Policies\Microsoft\Internet Explorer\Main" /v "DEPOff" /t REG_DWORD /d "1" /f 
 
 
-echo -- Pin Windows Terminal
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StartPage" /v "Favorites" /t REG_SZ /d "Windows.Terminal" /f 
+echo -- Mouse Settings
+reg add "HKCU\Control Panel\Mouse" /v "MouseSensitivity" /t REG_SZ /d "10" /f 
+reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f 
+reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f 
+reg add "HKU\.DEFAULT\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f 
+
 
 echo -- Enable New Boot Animation
 reg add "HKLM\SYSTEM\ControlSet001\Control\BootControl" /v "BootProgressAnimation" /t REG_DWORD /d "1" /f 
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\BootControl" /v "BootProgressAnimation" /t REG_DWORD /d "1" /f 
-
-echo -- Disable Autoplay for all media and devices
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" /v "DisableAutoplay" /t REG_DWORD /d "1" /f 
-
-echo -- Disable AutoPlay and AutoRun
-reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoAutorun" /t REG_DWORD /d "1" /f
-reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoDriveTypeAutoRun" /t REG_DWORD /d "255" /f
-
-echo -- Disable WiFi Sense (shares your WiFi network login with other people)
-reg add "HKLM\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v "value" /t REG_DWORD /d "0" /f
-reg add "HKLM\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" /v "value" /t REG_DWORD /d "0" /f
-reg add "HKLM\Software\Microsoft\WcmSvc\wifinetworkmanager\config" /v "AutoConnectAllowedOEM" /t REG_DWORD /d "0" /f
-
-
-
-echo -- Force update Group Policies
-gpupdate /force
 
 
 echo.

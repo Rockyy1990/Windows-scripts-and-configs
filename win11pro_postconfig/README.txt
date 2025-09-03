@@ -8,6 +8,9 @@
 # Eleven Forum 
 (https://www.elevenforum.com/)
 
+# Leader Board: Windows Tweaks
+https://www.elevenforum.com/t/windows-11-tweaks-leader-board.1842/
+
 # Creating custom windows install
 https://www.elevenforum.com/t/winpe-create-a-custom-windows-install-usb.4804/
 
@@ -26,6 +29,7 @@ https://batcmd.com/windows/10/services/
 https://batcmd.com/windows/11/services/
 
 
+
 # Creating an win10,11 iso with all updates
 https://uupdump.net/
 
@@ -38,12 +42,30 @@ https://uupdump.net/
 
 # Optimized Windows 11 ISOs
 https://windowsxlite.com 
+https://atlasos.net/
+https://www.atom-os.com/
+https://kernelos.org/
 
 # News for windows (and win11,10 isos with latest updates)
 https://deskmodder.de/
 
+
+
+# Create custom windows isos
+https://www.xda-developers.com/how-create-custom-windows-iso/
+https://woshub.com/create-custom-windows-image-preinstalled-apps/
+https://github.com/stschulte/custom-windows-11-install
+- Tools -
+https://github.com/builtbybel/Flyby11/releases
+https://www.ntlite.com/download/
+https://github.com/CodingWonders/DISMTools
+
 # Windows Tweaker (Optimize Windows 11)
 https://github.com/Teramanbr/TerabyteTweaker
+https://github.com/zoicware/ZOICWARE 
+https://github.com/Sheikh98-DEV/Windows-Optimizer 
+https://github.com/PWin11-Tweaker/PWin11-Tweaker
+https://winscript.cc/
 
 # Windows 10/11 Privacy tools
 https://www.oo-software.com/en/shutup10
@@ -51,14 +73,16 @@ https://www.w10privacy.de
 
 # Creating an answer file for windows auto install
 https://schneegans.de/windows/unattend-generator/
+https://github.com/CodingWonders/UnattendGen
 
 # Creating usb sticks for multiple ISOs
 https://github.com/ventoy/Ventoy/releases
+https://pendrivelinux.com/yumi-multiboot-usb-creator/#yumi-exfat-bios-and-uefi-usb-boot
+
 
 
 ; Github Repositorys (Windows 10,11 tweaks)
 # https://github.com/AlchemyTweaks
-# https://github.com/MoriEdan
 # https://github.com/rahilpathan
 # https://github.com/simeononsecurity
 # https://github.com/alufena
@@ -83,34 +107,29 @@ https://github.com/ventoy/Ventoy/releases
 # https://github.com/Invertex/RemoveRazerGameManager  
 # https://github.com/ionuttbara/melody_windows  
 # https://github.com/ionuttbara/windows-defender-remover  
-# https://github.com/jawsk10/Windows-Tweak-by-Jawsk  
 # https://github.com/Khorvie-Tech/khorvie-tech.github.io  
 # https://github.com/letsdoautomation/powershell  
 # https://github.com/LuSlower/dwm-basic  
-# https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md  
+# https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md 
+# https://github.com/KotarouKatsura/System-Repair-Tools#readme
 # https://github.com/miniant-git/REAL  
 # https://github.com/MrGrappleMan/Fynelium-NT  
 # https://github.com/NicholasBly/Windows-11-Latency-Optimization  
-# https://github.com/Orbmu2k/nvidiaProfileInspector  
 # https://github.com/QuakedK/Oneclick  
 # https://github.com/QuakedK/Scripting-Station  
 # https://github.com/rahilpathan/Tweaks-for-Gaming.bat  
 # https://github.com/rahilpathan/Win10Boost  
-# https://github.com/ran-sama/firefox-preferences  
 # https://github.com/Raphire/Win11Debloat  
 # https://github.com/ShadowWhisperer/Remove-MS-Edge  
-# https://github.com/Sheikh98-DEV/Windows-Optimizer  
 # https://github.com/simeononsecurity/Windows-Optimize-Debloat  
 # https://github.com/simeononsecurity/Windows-Optimize-Harden-Debloat  
-# https://github.com/SLStyler/Dithering-for-Windows-Simple-BAT-  
 # https://github.com/spddl/GoInterruptPolicy  
 # https://github.com/spddl/LowAudioLatency  
-# https://github.com/Syrusaki/Melody-s-automated-script-from-video  
 # https://github.com/TairikuOokami/Windows  
-# https://github.com/Xiseous/PC-Tuning  
-# https://github.com/zoicware/ZOICWARE  
+# https://github.com/QuiteAFancyEmerald/Slate-Desktop-for-Windows-11
 
-:: https://khorvie.tech/library  
+
+ :: https://khorvie.tech/library  
 :: https://n1kobg.blogspot.com  
 
 :: https://sites.google.com/site/tweakradje/windows/windows-tweaking  

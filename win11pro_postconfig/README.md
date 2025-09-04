@@ -146,8 +146,19 @@
   <li><a href="https://github.com/ChrisTitusTech/winutil" target="_blank" rel="noopener noreferrer">https://github.com/ChrisTitusTech/winutil</a></li>
   <li><a href="https://github.com/DaddyMadu/Windows10GamingFocus" target="_blank" rel="noopener noreferrer">https://github.com/DaddyMadu/Windows10GamingFocus</a></li>
   <li><a href="https://github.com/denis-g/windows10-latency-optimization" target="_blank" rel="noopener noreferrer">https://github.com/denis-g/windows10-latency-optimization</a></li>
-  <li><a href="https://github.com/djdallmann/GamingPCSetup" target="_blank" rel="noopener noreferrer">https://github.com/djdallmann/GamingPCSetup</a></li>
-  
+  <li><a href="https://github.com/dubbyOW/BCDEditTweaks" target="_blank" rel="noopener noreferrer">https://github.com/dubbyOW/BCDEditTweaks</a></li>
+  <li><a href="https://github.com/emadadel4/itt" target="_blank" rel="noopener noreferrer">https://github.com/emadadel4/itt</a></li>
+  <li><a href="https://github.com/FR33THYFR33THY/Ultimate-Windows-Optimization-Guide" target="_blank" rel="noopener noreferrer">https://github.com/FR33THYFR33THY/Ultimate-Windows-Optimization-Guide</a></li>
+  <li><a href="https://github.com/HakanFly/Windows-Tweaks" target="_blank" rel="noopener noreferrer">https://github.com/HakanFly/Windows-Tweaks</a></li>
+  <li><a href="https://github.com/henrypp/memreduct" target="_blank" rel="noopener noreferrer">https://github.com/henrypp/memreduct</a></li>
+  <li><a href="https://github.com/Hyyote/files-" target="_blank" rel="noopener noreferrer">https://github.com/Hyyote/files-</a></li>
+  <li><a href="https://github.com/Hyyote/In-depth-Windows-tweaking" target="_blank" rel="noopener noreferrer">https://github.com/Hyyote/In-depth-Windows-tweaking</a></li>
+  <li><a href="https://github.com/Invertex/RemoveRazerGameManager" target="_blank" rel="noopener noreferrer">https://github.com/Invertex/RemoveRazerGameManager</a></li>
+  <li><a href="https://github.com/ionuttbara/melody_windows" target="_blank" rel="noopener noreferrer">https://github.com/ionuttbara/melody_windows</a></li>
+  <li><a href="https://github.com/ionuttbara/windows-defender-remover" target="_blank" rel="noopener noreferrer">https://github.com/ionuttbara/windows-defender-remover</a></li>
+  <li><a href="https://github.com/Khorvie-Tech/khorvie-tech.github.io" target="_blank" rel="noopener noreferrer">https://github.com/Khorvie-Tech/khorvie-tech.github.io</a></li>
+  <li><a href="https://github.com/letsdoautomation/powershell" target="_blank" rel="noopener noreferrer">https://github.com/letsdoautomation/powershell</a></li>
+  <li><a href="https://github.com/LuSlower/dwm-basic" target="_blank" rel="noopener noreferrer">https://github.com/LuSlower/dwm-basic</a></li>
   <!-- Add more links as needed -->
 </ul>
 </section>
@@ -292,6 +303,7 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
+
 
 
 

@@ -36,6 +36,13 @@
 </section>
 
 <section>
+<h2>Pick your Hardware Parts to Build your PC</h2>
+<ul>
+  <li><a href="https://de.pcpartpicker.com/list/" target="_blank" rel="noopener noreferrer">https://de.pcpartpicker.com/list/</a></li>
+</ul>
+</section>
+
+<section>
 <h2>Windows 10 & 11 Services (restore CMD scripts)</h2>
 <ul>
   <li><a href="https://batcmd.com/windows/10/services/" target="_blank" rel="noopener noreferrer">https://batcmd.com/windows/10/services/</a></li>
@@ -159,6 +166,23 @@
   <li><a href="https://github.com/Khorvie-Tech/khorvie-tech.github.io" target="_blank" rel="noopener noreferrer">https://github.com/Khorvie-Tech/khorvie-tech.github.io</a></li>
   <li><a href="https://github.com/letsdoautomation/powershell" target="_blank" rel="noopener noreferrer">https://github.com/letsdoautomation/powershell</a></li>
   <li><a href="https://github.com/LuSlower/dwm-basic" target="_blank" rel="noopener noreferrer">https://github.com/LuSlower/dwm-basic</a></li>
+  <li><a href="https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md" target="_blank" rel="noopener noreferrer">https://github.com/MarcoRavich/Opendows/blob/main/Tweakers.md</a></li>
+  <li><a href="https://github.com/KotarouKatsura/System-Repair-Tools#readme" target="_blank" rel="noopener noreferrer">https://github.com/KotarouKatsura/System-Repair-Tools#readme</a></li>
+  <li><a href="https://github.com/miniant-git/REAL" target="_blank" rel="noopener noreferrer">https://github.com/miniant-git/REAL</a></li>
+  <li><a href="https://github.com/MrGrappleMan/Fynelium-NT" target="_blank" rel="noopener noreferrer">https://github.com/MrGrappleMan/Fynelium-NT</a></li>
+  <li><a href="https://github.com/NicholasBly/Windows-11-Latency-Optimization" target="_blank" rel="noopener noreferrer">https://github.com/NicholasBly/Windows-11-Latency-Optimization</a></li>
+  <li><a href="https://github.com/QuakedK/Oneclick" target="_blank" rel="noopener noreferrer">https://github.com/QuakedK/Oneclick</a></li>
+  <li><a href="https://github.com/QuakedK/Scripting-Station" target="_blank" rel="noopener noreferrer">https://github.com/QuakedK/Scripting-Station</a></li>
+  <li><a href="https://github.com/rahilpathan/Tweaks-for-Gaming.bat" target="_blank" rel="noopener noreferrer">https://github.com/rahilpathan/Tweaks-for-Gaming.bat</a></li>
+  <li><a href="https://github.com/rahilpathan/Win10Boost" target="_blank" rel="noopener noreferrer">https://github.com/rahilpathan/Win10Boost</a></li>
+  <li><a href="https://github.com/Raphire/Win11Debloat" target="_blank" rel="noopener noreferrer">https://github.com/Raphire/Win11Debloat</a></li>
+  <li><a href="https://github.com/ShadowWhisperer/Remove-MS-Edge" target="_blank" rel="noopener noreferrer">https://github.com/ShadowWhisperer/Remove-MS-Edge</a></li>
+  <li><a href="https://github.com/simeononsecurity/Windows-Optimize-Debloat" target="_blank" rel="noopener noreferrer">https://github.com/simeononsecurity/Windows-Optimize-Debloat</a></li>
+  <li><a href="https://github.com/simeononsecurity/Windows-Optimize-Harden-Debloat" target="_blank" rel="noopener noreferrer">https://github.com/simeononsecurity/Windows-Optimize-Harden-Debloat</a></li>
+  <li><a href="https://github.com/spddl/GoInterruptPolicy" target="_blank" rel="noopener noreferrer">https://github.com/spddl/GoInterruptPolicy</a></li>
+  <li><a href="https://github.com/spddl/LowAudioLatency" target="_blank" rel="noopener noreferrer">https://github.com/spddl/LowAudioLatency</a></li>
+  <li><a href="https://github.com/TairikuOokami/Windows" target="_blank" rel="noopener noreferrer">https://github.com/TairikuOokami/Windows</a></li>
+  <li><a href="https://github.com/QuiteAFancyEmerald/Slate-Desktop-for-Windows-11" target="_blank" rel="noopener noreferrer">https://github.com/QuiteAFancyEmerald/Slate-Desktop-for-Windows-11</a></li>
   <!-- Add more links as needed -->
 </ul>
 </section>
@@ -303,6 +327,7 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
+
 
 
 

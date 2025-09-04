@@ -1,6 +1,3 @@
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -36,8 +33,7 @@
   a:hover {
     text-decoration: underline;
   }
-  /* Optional: style for code blocks */
-pre {
+  pre {
   background-color: #fff;
   padding: 10px;
   overflow-x: auto;
@@ -328,4 +324,5 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
+
 

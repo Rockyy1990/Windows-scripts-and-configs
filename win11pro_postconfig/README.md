@@ -142,6 +142,12 @@
   <li><a href="https://github.com/andrew-s-taylor/public" target="_blank" rel="noopener noreferrer">https://github.com/andrew-s-taylor/public</a></li>
   <li><a href="https://github.com/arcadesdude/BRU" target="_blank" rel="noopener noreferrer">https://github.com/arcadesdude/BRU</a></li>
   <li><a href="https://github.com/Batlez/Batlez-Tweaks" target="_blank" rel="noopener noreferrer">https://github.com/Batlez/Batlez-Tweaks</a></li>
+  <li><a href="https://github.com/BoringBoredom/PC-Optimization-Hub" target="_blank" rel="noopener noreferrer">https://github.com/BoringBoredom/PC-Optimization-Hub</a></li>
+  <li><a href="https://github.com/ChrisTitusTech/winutil" target="_blank" rel="noopener noreferrer">https://github.com/ChrisTitusTech/winutil</a></li>
+  <li><a href="https://github.com/DaddyMadu/Windows10GamingFocus" target="_blank" rel="noopener noreferrer">https://github.com/DaddyMadu/Windows10GamingFocus</a></li>
+  <li><a href="https://github.com/denis-g/windows10-latency-optimization" target="_blank" rel="noopener noreferrer">https://github.com/denis-g/windows10-latency-optimization</a></li>
+  <li><a href="https://github.com/djdallmann/GamingPCSetup" target="_blank" rel="noopener noreferrer">https://github.com/djdallmann/GamingPCSetup</a></li>
+  
   <!-- Add more links as needed -->
 </ul>
 </section>
@@ -286,6 +292,7 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
+
 
 
 

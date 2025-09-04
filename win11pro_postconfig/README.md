@@ -139,13 +139,16 @@
   <li><a href="https://github.com/alufena" target="_blank" rel="noopener noreferrer">https://github.com/alufena</a></li>
   <li><a href="https://github.com/shoober420" target="_blank" rel="noopener noreferrer">https://github.com/shoober420</a></li>
   <li><a href="https://github.com/ancel1x/Ancels-Performance-Batch" target="_blank" rel="noopener noreferrer">https://github.com/ancel1x/Ancels-Performance-Batch</a></li>
+  <li><a href="https://github.com/andrew-s-taylor/public" target="_blank" rel="noopener noreferrer">https://github.com/andrew-s-taylor/public</a></li>
+  <li><a href="https://github.com/arcadesdude/BRU" target="_blank" rel="noopener noreferrer">https://github.com/arcadesdude/BRU</a></li>
+  <li><a href="https://github.com/Batlez/Batlez-Tweaks" target="_blank" rel="noopener noreferrer">https://github.com/Batlez/Batlez-Tweaks</a></li>
   <!-- Add more links as needed -->
 </ul>
 </section>
 
 <section>
 <h2>Various Tweaks and Tips</h2>
-<p><em>Note: Run CMD or Windows Terminal with elevated rights for system tasks.</em></p>
+<p><em>Note: Run CMD or Windows Terminal with elevated rights for system tasks!!.</em></p>
 <ul>
   <li>Apps - FixWin: <a href="https://www.thewindowsclub.com/fixwin-windows-pc-repair-software" target="_blank" rel="noopener noreferrer">https://www.thewindowsclub.com/fixwin-windows-pc-repair-software</a></li>
   <li>Windows Drivers: <a href="https://www.catalog.update.microsoft.com" target="_blank" rel="noopener noreferrer">https://www.catalog.update.microsoft.com</a></li>
@@ -250,10 +253,10 @@ netsh interface ipv6 add dns name="Ethernet" 2001:4860:4860::8844 index=2
 </pre>
 <h3>Recommended DNS Servers</h3>
 <ul>
-  <li><strong>Google Public DNS:</strong> 8.8.8.8 / 8.8.4.4 and IPv6: 2001:4860:4860::8888 / ::8844</li>
-  <li><strong>Cloudflare DNS:</strong> 1.1.1.1 / 1.0.0.1 and IPv6: 2606:4700:4700::1111 / ::1001</li>
-  <li><strong>OpenDNS:</strong> 208.67.222.222 / 208.67.220.220 and IPv6: 2620:119:35::35 / ::53</li>
-  <li><strong>Quad9 DNS:</strong> 9.9.9.9 / 149.112.112.112 and IPv6: 2620:fe::fe / ::9</li>
+  <li><strong>Google Public DNS:</strong> 8.8.8.8 , 8.8.4.4 and IPv6: 2001:4860:4860::8888::8844</li>
+  <li><strong>Cloudflare DNS:</strong> 1.1.1.1 , 1.0.0.1 and IPv6: 2606:4700:4700::1111::1001</li>
+  <li><strong>OpenDNS:</strong> 208.67.222.222 , 208.67.220.220 and IPv6: 2620:119:35::35::53</li>
+  <li><strong>Quad9 DNS:</strong> 9.9.9.9 , 149.112.112.112 and IPv6: 2620:fe::fe::9</li>
 </ul>
 </section>
 
@@ -262,7 +265,7 @@ netsh interface ipv6 add dns name="Ethernet" 2001:4860:4860::8844 index=2
 <pre>
 powercfg -change -monitor-timeout-ac 24
 powercfg -change -monitor-timeout-dc 24
-
+--
 powercfg -change -standby-timeout-ac 36
 powercfg -change -standby-timeout-dc 36
 </pre>
@@ -275,13 +278,15 @@ powercfg -change -standby-timeout-dc 36
   <li>Disable CPU Spread Spectrum</li>
   <li>Enable Resizable BAR</li>
   <li>Disable CPU Boost, IOMMU, SVM, TPM, Secure Boot, UEFI Fast Boot, CSM, TSME</li>
-  <li>Set PCIe ARI Support & Enumeration to Auto, disable Spread Spectrum Clocking</li>
+  <li>Set PCIe ARI Support & Enumeration to Auto 
+  <li>disable Spread Spectrum Clocking</li>
   <li>Disable USB Power Down & ErP, Deep Sleep / USB Power Share</li>
 </ul>
 </section>
 
 </body>
 </html>
+
 
 
 

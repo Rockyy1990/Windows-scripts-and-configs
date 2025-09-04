@@ -1,45 +1,4 @@
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.4;
-    background-color: #fffce8;
-    margin: 0;
-    padding: 20px;
-  }
-  header {
-    text-align: center;
-    padding-bottom: 20px;
-  }
-  h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-  }
-  h2 {
-    margin-top: 40px;
-    border-bottom: 2px solid #333;
-    padding-bottom: 5px;
-  }
-  ul {
-    list-style-type: disc;
-    padding-left: 0;
-  }
-  li {
-    margin: 8px 0;
-  }
-  a {
-    color: #0066cc;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  pre {
-  background-color: #fff;
-  padding: 10px;
-  overflow-x: auto;
-  border: 1px solid #ccc;
-}
-</style>
+
 </head>
 <body>
 <header>
@@ -324,5 +283,6 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
+
 
 

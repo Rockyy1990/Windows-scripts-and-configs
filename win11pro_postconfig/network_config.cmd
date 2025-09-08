@@ -9,6 +9,8 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "EnablePMTU
 
 netsh interface ipv4 set subinterface "Ethernet" mtu=1500 store=persistent
 
+netsh interface ip set address name=%INTERFACE_NAME% static 192.168.10.12 255.255.255.0 192.168.10.1
+
 netsh interface ipv4 set dns name=%INTERFACE_NAME% static 192.168.10.14 primary
 netsh interface ipv4 add dns name=%INTERFACE_NAME% 1.1.1.1 index=2
 

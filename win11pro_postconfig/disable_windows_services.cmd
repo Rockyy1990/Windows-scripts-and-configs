@@ -35,5 +35,17 @@ sc stop "wlidsvc"
 sc config "wlidsvc" start=disabled
 
 
+sc config BITS start= delayed-auto
+sc config UsoSvc start= delayed-auto
+sc config VSS start= demand
+sc config Spooler start= demand
+sc config TrkWks start= disabled
+sc config XblAuthManager start= disabled
+sc config XblGameSave start= disabled
+sc config XboxGipSvc start= disabled
+sc config XboxNetApiSvc start= disabled
+schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /Disable
+
+
 echo All services are disabled.
 pause

@@ -96,6 +96,7 @@
       <li><a href="https://github.com/builtbybel/Flyby11/releases" target="_blank" rel="noopener noreferrer">https://github.com/builtbybel/Flyby11/releases</a></li>
       <li><a href="https://www.ntlite.com/download/" target="_blank" rel="noopener noreferrer">https://www.ntlite.com/download/</a></li>
       <li><a href="https://github.com/CodingWonders/DISMTools" target="_blank" rel="noopener noreferrer">https://github.com/CodingWonders/DISMTools</a></li>
+	  <li><a href="https://rufus.ie" target="_blank" rel="noopener noreferrer">https://rufus.ie</a></li>
     </ul>
   </li>
 </ul>
@@ -294,10 +295,10 @@ netsh interface ipv6 add dns name="Ethernet" 2001:4860:4860::8844 index=2
 </pre>
 <h3>Recommended DNS Servers</h3>
 <ul>
-  <li><strong>Google Public DNS:</strong> 8.8.8.8 , 8.8.4.4 and IPv6: 2001:4860:4860::8888 , 2001:4860:4860::8844</li>
-  <li><strong>Cloudflare DNS:</strong> 1.1.1.1 , 1.0.0.1    and IPv6: 2606:4700:4700::1111 , 2606:4700:4700::1001</li>
-  <li><strong>OpenDNS:</strong> 208.67.222.222 , 208.67.220.220 and IPv6: 2620:119:35::35 , 2620:119:53::53</li>
-  <li><strong>Quad9 DNS:</strong> 9.9.9.9 , 149.112.112.112     and IPv6: 2620:fe::fe , 2620:fe::9</li>
+  <li><strong>Google Public DNS:</strong> 8.8.8.8 , 8.8.4.4 and IPv6:2001:4860:4860::8888 , 2001:4860:4860::8844</li>
+  <li><strong>Cloudflare DNS:</strong> 1.1.1.1 , 1.0.0.1 and IPv6: 2606:4700:4700::1111::1001</li>
+  <li><strong>OpenDNS:</strong> 208.67.222.222 , 208.67.220.220 and IPv6: 2620:119:35::35::53</li>
+  <li><strong>Quad9 DNS:</strong> 9.9.9.9 , 149.112.112.112 and IPv6: 2620:fe::fe::9</li>
 </ul>
 </section>
 
@@ -327,8 +328,6 @@ powercfg -change -standby-timeout-dc 36
 
 </body>
 </html>
-
-
 
 
 

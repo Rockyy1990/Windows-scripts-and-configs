@@ -1,0 +1,26 @@
+
+# Last Edit: 10.09.2025
+
+# settings for ntlite (win11pro, win11home)
+
+[Windows Update]
+Search but let me choose to install
+No Automatic Driver update
+Target Version: 24h2
+Download with wsus without peer and cloud
+
+[System]
+Use only latest CLR Version
+Disable VBS
+Disable Bitlocker encryption
+bypassnro (Use offline Account)
+Disable autoreboot BSOD
+
+[Explorer]
+Use Compact View
+Show known file extensions
+Start explorer window with separate process
+Verbose status on
+
+
+

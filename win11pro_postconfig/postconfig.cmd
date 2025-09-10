@@ -1,9 +1,9 @@
 @echo off
 
 echo.
-echo ---------------------------------
-echo Postconfig after windows install.
-echo ---------------------------------
+echo ----------------------------------------
+echo  Basic postconfig after windows install.
+echo ----------------------------------------
 echo.
 pause
 
@@ -194,7 +194,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCloud
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "VoiceShortcut" /t "REG_DWORD" /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "CortanaConsent" /t "REG_DWORD" /d "0" /f
 
-echo -- Disabling Office telemetry
+echo -- Disabling Office Telemetry
 reg add "HKCU\SOFTWARE\Microsoft\Office\15.0\Outlook\Options\Mail" /v "EnableLogging" /t REG_DWORD /d 0 /f
 reg add "HKCU\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Mail" /v "EnableLogging" /t REG_DWORD /d 0 /f
 reg add "HKCU\SOFTWARE\Microsoft\Office\15.0\Outlook\Options\Calendar" /v "EnableCalendarLogging" /t REG_DWORD /d 0 /f
@@ -267,6 +267,9 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Taskba
 
 rem echo -- Disabling Snap Assist Flyout
 rem reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "EnableSnapAssistFlyout" /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "JointResize" /t REG_DWORD /d "1" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "SnapAssist" /t REG_DWORD /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "SnapFill" /t REG_DWORD /d "1" /f
 
 echo -- Enabling Detailed BSOD
 reg add "HKLM\System\CurrentControlSet\Control\CrashControl" /v "DisplayParameters" /t REG_DWORD /d 1 /f
@@ -365,7 +368,7 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete" /
 rem 0 - Do this for all current items checkbox / 1 - Disabled
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "ConfirmationCheckBoxDoForAll" /t REG_DWORD /d "0" /f
 
-rem 1 - Always show more details in copy dialog
+rem 1 - Disable Always show more details in copy dialog
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "EnthusiastMode" /t REG_DWORD /d "0" /f
 
 echo -- Disable Previous Version Tab
@@ -387,11 +390,11 @@ reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs\Command" /ve /d "cmd /k dism /o
 
 
 echo -- Enable WMIC
-DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
+rem DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
 
-wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
-wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
-wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
+rem wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
+rem wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
+rem wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
 
 echo -- Disable Lockscreen
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoLockScreen /t REG_DWORD /d 1 /f
@@ -497,6 +500,11 @@ rem reagentc /info
 reagentc /disable
 
 
+echo -- Disable Core Parking
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power" /v "CoreParkingDisabled" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "ForceParkingRequested" /t REG_DWORD /d "0" /f
+
+
 echo -- File System Tweaks
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "DisableLastAccess" /t REG_DWORD /d "1" /f 
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "MaximumTunnelEntries" /t REG_DWORD /d "0" /f 
@@ -513,14 +521,14 @@ REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager" /v "ProtectionMo
 echo -- Specifies the Wake Policy of LPC controllers during activity for the best possible latency
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager" /v "AlpcWakePolicy" /t REG_DWORD /d "1" /f 
 
-echo -- Drivers and the kernel can be paged to disk as needed
+echo -- Disable Paging Executive
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "DisablePagingExecutive" /t REG_DWORD /d "1" /f 
 
-echo -- Using big system memory caching to improve microstuttering
+echo -- Enable Large System Cache
 REG ADD "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "LargeSystemCache" /t REG_DWORD /d "1" /f 
 
 
-echo -- Multimedia Profile
+echo -- Multimedia Profile tweaks
 REG ADD "HKLM\System\CurrentControlSet\Services\MMCSS" /v "Start" /t REG_DWORD /d "4" /f >NUL 2>&1
 REG ADD "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /t REG_DWORD /d "10" /f >NUL 2>&1
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SchedulerTimerResolution" /t REG_DWORD /d 5000 /f >NUL 2>&1
@@ -626,7 +634,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\USB" /v "DisableSelectiveSuspend
 echo -- Set Process Scheduling to 38
 REG ADD "HKLM\System\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "38" /f 
 
-:: Disable downloads blocking
+echo -- Disable downloads blocking
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" /v "SaveZoneInformation" /t REG_DWORD /d "1" /f 
 
 echo -- Disable malicious software removal tool from installing
@@ -655,9 +663,11 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v "Disa
 echo -- Disable LockScreen
 rem reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v "NoLockScreen" /t REG_DWORD /d "1" /f
 
-echo -- Disable Sign-in Screen Background Image
-rem reg add "HKLM\Software\Policies\Microsoft\Windows\System" /v "DisableLogonBackgroundImage" /t REG_DWORD /d "1" /f
+echo -- Disable Winlogon (SFC, MultipleTSSessions)
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "SFCDisable" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "AllowMultipleTSSessions" /t REG_DWORD /d "0" /f
 
+echo -- Disable Lockscreen features
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "AnimateLockScreenBackground" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "LockScreenOverlaysDisabled" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScreenSlideshow" /t REG_DWORD /d "1" /f
@@ -671,7 +681,7 @@ echo -- Enable Sudo
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo" /v "Enabled" /t REG_DWORD /d 1 /f 
 
 
-echo -- Set registry values for MRT policies
+echo -- Disable MRT
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DontOfferThroughWUAU" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT" /v "DoNotShowFeedbackNotifications" /t REG_DWORD /d 1 /f 
@@ -770,10 +780,10 @@ reg add "HKLM\SOFTWARE\Microsoft\Direct3D\ReferenceDevice" /v "AllowAsync" /t RE
 echo -- Force contiguous memory allocation in the DirectX Graphics Kernel
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "DpiMapIommuContiguous" /t REG_DWORD /d "1" /f
 
-rem # DECREASES PERFORAMNCE DRASTICALLY WHEN ENABLED (1)
+echo -- # Disable ForceFlipTrueImmediateMode (DECREASES PERFORAMNCE DRASTICALLY WHEN ENABLED (1))
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "ForceFlipTrueImmediateMode" /t REG_DWORD /d "0" /f
 
-rem # FREEZES SYSTEM WHEN ENABLED (1)
+echo -- # Disable DirectSubmission (FREEZES SYSTEM WHEN ENABLED (1))
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "EnableDirectSubmission" /t REG_DWORD /d "0" /f
 
 rem # DECREASES FPS WHEN SET TO 1
@@ -783,6 +793,36 @@ rem reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v
 rem reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "HwQueuedRenderPacketGroupLimitPerNode" /t REG_DWORD /d "1" /f
 
 
+echo -- Enable GPU Preemption
+REG ADD "HKLM\System\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "EnablePreemption" /t REG_DWORD /d "1" /f 
+REG ADD "HKLM\System\CurrentControlSet\Control\GraphicsDrivers\Scheduler" /v "VsyncIdleTimeout" /t REG_DWORD /d "0" /f 
+
+echo -- Enable CPU Affinity Optimization for GPU
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "CpuAffinityOptimization" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD\DXX" /v "CpuAffinityOptimization" /t REG_SZ /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\UMD\DXC" /v "CpuAffinityOptimization" /t REG_SZ /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i\OpenGL\Private" /v "CpuAffinityOptimization" /t REG_DWORD /d "1" /f
+
+echo -- Enable GPU Scheduler (HSA)
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "KMD_EnableHsa" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "KMD_EnableHsaHws" /t REG_DWORD /d "1" /f
+
+echo -- Disable Fair Share CPU Scheduling
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Quota System" /v "EnableCpuQuota" /t REG_DWORD /d "0" /f
+
+echo -- Enable Critical System Processes Boost
+reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "CriticalSystemProcessesBoost" /t REG_DWORD /d "1" /f
+
+echo -- Disable DMA Copy
+rem # Direct Memory Access (DMA) engines for data transfers between system memory and the GPU, or within the GPU itself
+rem # Uses GPU instead of CPU for DMA (similar to HAGS)
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "DisableDMACopy" /t REG_DWORD /d "1" /f
+
+
+
+echo -- Disable BlockWrite
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "DisableBlockWrite" /t REG_DWORD /d "0" /f
+
 echo -- Setting Service Priorities & Boost
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\I/O System" /v "PassiveIntRealTimeWorkerPriority" /t REG_DWORD /d "18" /f
 
@@ -790,7 +830,34 @@ echo -- Disable KernelVelocity FG Boost Decay
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\KernelVelocity" /v "DisableFGBoostDecay" /t REG_DWORD /d "1" /f
 
 
+echo -- Hide Home Icon from explorer
+REM Add the registry key
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}" /ve /d "CLSID_MSGraphHomeFolder" /f
 
+REM Set the HiddenByDefault value
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}" /v HiddenByDefault /t REG_DWORD /d 1 /f
+reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery" /f
+
+echo -- Disable Persist Browsers
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "PersistBrowsers" /t REG_DWORD /d "0" /f
+
+echo -- Disable Custom Inking and Typing Dictionary
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\InkingAndTypingPersonalization" /v "Value" /t REG_DWORD /d "0" /f
+
+echo -- Display Windows watermark and version at the bottom right of the screen (Enable DisplayVersion)
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows" /v "DisplayVersion" /t REG_DWORD /d "1" /f
+
+echo -- Disable Taskbar Badges
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarBadges" /t REG_DWORD /d "0" /f
+
+echo -- Disable Storage Health Telemetry
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\StorageHealth" /v "AllowDiskHealthModelUpdates" /t REG_DWORD /d "0" /f
+
+rem echo -- Turn off Automatic Device Driver Installation
+rem reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v "PreventDeviceMetadataFromNetwork" /t REG_DWORD /d "1" /f
+
+
+echo -- Set environment variables
 setx DXGL_FRAME_LATENCY_WAITABLE_OBJECT "1" /M
 setx DXGI_FRAME_LATENCY_WAITABLE_OBJECT "1" /M
 setx DXGI_ALLOW_TEARING "1" /M
@@ -806,13 +873,33 @@ setx GPU_MAX_HEAP_SIZE "100" /M
 setx GPU_FORCE_64BIT_PTR "0" /M
 
 
+echo -- Basic bcd tweaks
+bcdedit /set onecpu No
+bcdedit /deletevalue numproc
+bcdedit /deletevalue useplatformclock
+bcdedit /set useplatformtick yes
+bcdedit /set disabledynamictick yes
+bcdedit /set tscsyncpolicy enhanced
+
+bcdedit /set bootuxdisabled on
+bcdedit /set quietboot off
+
+bcdedit /set nointegritychecks on
+bcdedit /set recoveryenabled off
+bcdedit /ems Off
+
+bcdedit /set firstmegabytepolicy UseAll
+bcdedit /set avoidlowmemory 0x8000000
+
+
+
 echo -- Turn off my screen after 25 minutes (ac-plugged in)
-powercfg -change -monitor-timeout-ac 24
-powercfg -change -monitor-timeout-dc 24
+powercfg -change -monitor-timeout-ac 22
+powercfg -change -monitor-timeout-dc 22
 
 echo -- Put my device to sleep after 30 minutes (ac-plugged in)
-powercfg -change -standby-timeout-ac 36
-powercfg -change -standby-timeout-dc 36
+powercfg -change -standby-timeout-ac 38
+powercfg -change -standby-timeout-dc 38
 
 
 echo.

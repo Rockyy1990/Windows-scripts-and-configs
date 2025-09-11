@@ -1,6 +1,8 @@
 @echo off
 
+echo.
 echo Disable various windows services..
+echo.
 
 echo Disable Windows Insider Service...
 sc config "wisvc" start= disabled
@@ -47,5 +49,5 @@ sc config XboxNetApiSvc start= disabled
 schtasks /Change /TN "Microsoft\XblGameSave\XblGameSaveTask" /Disable
 
 
-echo All services are disabled.
+echo All done.
 pause

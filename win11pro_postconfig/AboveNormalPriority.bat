@@ -1,4 +1,3 @@
-@echo off
 
 rem # Above Normal for processes
 rem # USING HIGH LOWERS PERFORMANCE
@@ -12,6 +11,10 @@ rem # 3: High
 rem # 4: Real Time (DO NOT USE THIS)
 rem # 5: Below Normal
 rem # 6: Above Normal
+
+echo.
+pause
+echo.
 
 rem # System Processes
 

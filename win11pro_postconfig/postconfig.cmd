@@ -389,7 +389,7 @@ reg add "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs\Command" /ve /d "cmd /k dism /o
 
 
 
-echo -- Enable WMIC
+rem echo -- Enable WMIC
 rem DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
 
 rem wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
@@ -487,7 +487,7 @@ reg add "HKLM\SOFTWARE\Microsoft\ClickToRun\OverRide" /v "DisableLogManagement" 
 
 
 
-REM Laufwerksnamen ändern
+rem Change name of drive C:
 label C: System
 if %errorlevel% EQU 0 (
     echo Laufwerksname erfolgreich auf "System" gesetzt.
@@ -661,7 +661,7 @@ echo -- Disable Logon Background Image
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v "DisableLogonBackgroundImage" /t REG_DWORD /d 1 /f 
 
 echo -- Disable LockScreen
-rem reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v "NoLockScreen" /t REG_DWORD /d "1" /f
+reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v "NoLockScreen" /t REG_DWORD /d "1" /f
 
 echo -- Disable Winlogon (SFC, MultipleTSSessions)
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "SFCDisable" /t REG_DWORD /d "1" /f
@@ -752,6 +752,17 @@ echo -- Disable LMHOSTS Lookup on all adapters / 1 - Enable
 reg add "HKLM\System\CurrentControlSet\Services\NetBT\Parameters" /v "EnableLMHOSTS" /t REG_DWORD /d "0" /f
 
 
+echo -- DisplayPostProcessing system profile tweaks 
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Affinity" /t REG_DWORD /d "0" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Background Only" /t REG_SZ /d "False" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Clock Rate" /t REG_DWORD /d "2710" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "GPU Priority" /t REG_DWORD /d "8" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Priority" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Scheduling Category" /t REG_SZ /d "High" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "SFIO Priority" /t REG_SZ /d "High" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing" /v "Latency Sensitive" /t REG_SZ /d "True" /f
+
+
 echo -- Audio system profile tweaks 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Affinity" /t REG_DWORD /d "0" /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Background Only" /t REG_SZ /d "False" /f
@@ -819,6 +830,12 @@ rem # Uses GPU instead of CPU for DMA (similar to HAGS)
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "DisableDMACopy" /t REG_DWORD /d "1" /f
 
 
+echo -- Critical Worker Threads
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalCriticalWorkerThreads" /t REG_DWORD /d "64" /f
+
+echo -- Delayed Worker Threads
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalDelayedWorkerThreads" /t REG_DWORD /d "64" /f
+
 
 echo -- Disable BlockWrite
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "DisableBlockWrite" /t REG_DWORD /d "0" /f
@@ -853,8 +870,19 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "T
 echo -- Disable Storage Health Telemetry
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\StorageHealth" /v "AllowDiskHealthModelUpdates" /t REG_DWORD /d "0" /f
 
-rem echo -- Turn off Automatic Device Driver Installation
-rem reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v "PreventDeviceMetadataFromNetwork" /t REG_DWORD /d "1" /f
+echo -- Turn off Automatic Device Driver Installation
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v "PreventDeviceMetadataFromNetwork" /t REG_DWORD /d "1" /f
+
+echo -- Disable Low Disk Space Alerts
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoLowDiskSpaceChecks" /t REG_DWORD /d "1" /f
+reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoLowDiskSpaceChecks" /t REG_DWORD /d "1" /f
+
+echo -- Enable DLL Hijacking Protection
+rem # https://www.tenable.com/plugins/nessus/48763
+rem # 0xffffffff = FULL DLL HIJACKING PROTECTION
+reg add "HKLM\System\CurrentControlSet\Control\Session Manager" /v "CWDIllegalInDllSearch" /t REG_DWORD /d "0xffffffff" /f
+
+reg add "HKLM\System\CurrentControlSet\Control\Session Manager" /v "ImageExecutionOptions" /t REG_DWORD /d "0" /
 
 
 echo -- Set environment variables
@@ -891,19 +919,38 @@ bcdedit /ems Off
 bcdedit /set firstmegabytepolicy UseAll
 bcdedit /set avoidlowmemory 0x8000000
 
+echo -- Increase the user-mode virtual address space 268435328 (256mb)
+bcdedit /set increaseuserva 26843532
+
+bcdedit /set forcefipscrypto No
+bcdedit /set noumex Yes
+bcdedit /set uselegacyapicmode No
+bcdedit /set extendedinput Yes
+
+bcdedit /set halbreakpoint No
+bcdedit /set bootmenupolicy Legacy
+
+echo -- No boot log and debug
+bcdedit /set debug No
+bcdedit /set debugstart Disable
+bcdedit /set bootdebug Off
+bcdedit /set bootlog No
+bcdedit /bootdebug Off
+bcdedit /bootems Off
+bcdedit /debug Off
 
 
 echo -- Turn off my screen after 25 minutes (ac-plugged in)
-powercfg -change -monitor-timeout-ac 22
-powercfg -change -monitor-timeout-dc 22
+powercfg -change -monitor-timeout-ac 25
+powercfg -change -monitor-timeout-dc 25
 
-echo -- Put my device to sleep after 30 minutes (ac-plugged in)
-powercfg -change -standby-timeout-ac 38
-powercfg -change -standby-timeout-dc 38
+echo -- Put my device to sleep after 45 minutes (ac-plugged in)
+powercfg -change -standby-timeout-ac 45
+powercfg -change -standby-timeout-dc 45
 
 
 echo.
-echo Postconfig are complete.
+echo Postconfig is complete.
 pause
 
 

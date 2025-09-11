@@ -1,3 +1,10 @@
+> [!WARNING]  
+> Use these scripts at your own risk. You should create a backup of your system before use.
+
+> [!CAUTION]  
+> Always perform your own tests and not on your main systems!
+
+
 </head>
 <body>
 <header>

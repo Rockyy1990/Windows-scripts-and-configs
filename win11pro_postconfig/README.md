@@ -290,6 +290,9 @@ reagentc /disable
 </pre>
 <h3>Change DNS Servers</h3>
 <pre>
+
+(Change the the interface name to the name of your interface.)
+
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "EnablePMTUDiscovery" /t REG_DWORD /d "0" /f
 
 netsh interface ipv4 set subinterface "Ethernet" mtu=1500 store=persistent
@@ -312,11 +315,11 @@ netsh interface ipv6 add dns name="Ethernet" 2001:4860:4860::8844 index=2
 <section>
 <h2>Change Power Plans</h2>
 <pre>
-powercfg -change -monitor-timeout-ac 24
-powercfg -change -monitor-timeout-dc 24
+powercfg -change -monitor-timeout-ac 25
+powercfg -change -monitor-timeout-dc 25
 --
-powercfg -change -standby-timeout-ac 36
-powercfg -change -standby-timeout-dc 36
+powercfg -change -standby-timeout-ac 45
+powercfg -change -standby-timeout-dc 45
 </pre>
 </section>
 

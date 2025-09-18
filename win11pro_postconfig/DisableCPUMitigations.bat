@@ -17,5 +17,6 @@ reg add "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management
 
 reg add "HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f
 
+echo.
 echo All done.
 PAUSE

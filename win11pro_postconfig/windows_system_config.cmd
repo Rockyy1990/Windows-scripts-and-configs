@@ -6,7 +6,6 @@ echo.
 
 pause
 
-Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "AllowBlockingAppsAtShutdown" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "AllowClipboardHistory" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "AllowCrossDeviceClipboard" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "AllowDomainDelayLock" /t REG_DWORD /d "0" /f
@@ -38,7 +37,6 @@ Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "RunAsPPL" /t R
 Reg.exe delete "HKLM\Software\Policies\Microsoft\Windows\System" /v "ShellSmartScreenLevel" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "SlowLinkUIEnabled" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "UploadUserActivities" /t REG_DWORD /d "0" /f
-Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "WaitForNetwork" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "EnableFontProviders" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "DisableLockScreenAppNotifications" /t REG_DWORD /d "1" /f
 Reg.exe add "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\System" /v "DisableLockScreenAppNotifications" /t REG_DWORD /d "1" /f

@@ -1,9 +1,24 @@
 @echo off
 
 echo.
-echo ----------------------------------------
-echo  Basic postconfig after windows install.
-echo ----------------------------------------
+echo --------------------------------------
+echo  ----- Basic Windows11 config -------
+echo --------------------------------------
+echo.
+echo --------------------------------------
+echo Privacy tweaks
+echo System tweaks (performance, stability, latency)
+echo Disable Consumer Features
+echo Disable Recall / Copilot
+echo Disable SMB 1 u 2
+echo Disable Reserved Storage
+echo Enable Windows Sandbox
+echo Basic CPU and GPU tweaks 
+echo Disable Windows Lockscreen 
+echo Disable Lockscreen Wallpaper on Logon screen
+echo Disable Tablet features
+echo Windows Boot Parameter Tweaks (bcd)
+echo --------------------------------------
 echo.
 pause
 
@@ -368,7 +383,7 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete" /
 rem 0 - Do this for all current items checkbox / 1 - Disabled
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "ConfirmationCheckBoxDoForAll" /t REG_DWORD /d "0" /f
 
-rem 1 - Disable Always show more details in copy dialog
+echo -- Disable Always show more details in copy dialog
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" /v "EnthusiastMode" /t REG_DWORD /d "0" /f
 
 echo -- Disable Previous Version Tab
@@ -378,7 +393,7 @@ echo -- Disable FTH (Fault Tolerant Heap)
 reg add "HKLM\Software\Microsoft\FTH" /v "Enabled" /t Reg_DWORD /d "0" /f
 
 
-REM add the "Install" context menu for CABFolder with RunAs
+echo -- "Install" context menu for CABFolder with RunAs
 REM Remove existing key if it exists
 reg delete "HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs" /f >nul 2>&1
 
@@ -395,6 +410,7 @@ rem DISM /Online /Add-Capability /CapabilityName:WMIC~~~~
 rem wmic computersystem where name="%computername%" set AutomaticManagedPagefile=False
 rem wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=0,MaximumSize=0
 rem wmic pagefileset where name="%SystemDrive%\\pagefile.sys" delete
+
 
 echo -- Disable Lockscreen
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoLockScreen /t REG_DWORD /d 1 /f
@@ -511,6 +527,28 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "MaximumTunnelEntr
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "MaximumTunnelEntryAgeInSeconds" /t REG_DWORD /d "0" /f 
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsAllowExtendedCharacterIn8dot3Name" /t REG_DWORD /d "0" /f 
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisableVolsnapHints" /t REG_DWORD /d "0" /f 
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsMftZoneReservation" /t REG_DWORD /d "4" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsQuotaNotifyRate" /t REG_DWORD /d "4294967295" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "PathCache" /t REG_DWORD /d "128" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "LongPathsEnabled" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "RefsDisableLastAccessUpdate" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "ScrubMode" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "SymlinkLocalToLocalEvaluation" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "SymlinkLocalToRemoteEvaluation" /t REG_DWORD /d "1" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "SymlinkRemoteToLocalEvaluation" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "SymlinkRemoteToRemoteEvaluation" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "UdfsCloseSessionOnEject" /t REG_DWORD /d "3" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "UdfsSoftwareDefectManagement" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "Win31FileSystem" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "Win95TruncatedExtensions" /t REG_DWORD /d "0" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsForceNonPagedPoolAllocation" /t REG_DWORD /d "0" /f
+REM 00000000/00000002(=fsutilbehaviorsetmemoryusage)
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsMemoryUsage" /t REG_DWORD /d "2" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "FileNameCache" /t REG_DWORD /d "1024" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "ConfigFileAllocSize" /t REG_DWORD /d "1024" /f
+
+echo -- Dont Verify Random Drivers
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v "DontVerifyRandomDrivers" /t REG_DWORD /d "1" /f
 
 echo -- Disabling RAM compression...
 POWERSHELL Disable-MMAgent -MemoryCompression -ApplicationPreLaunch -ErrorAction SilentlyContinue 
@@ -668,11 +706,11 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "SFCDisa
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v "AllowMultipleTSSessions" /t REG_DWORD /d "0" /f
 
 echo -- Disable Lockscreen features
-Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "AnimateLockScreenBackground" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "LockScreenOverlaysDisabled" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScreenSlideshow" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoChangingLockScreen" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScreenCamera" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "AnimateLockScreenBackground" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "LockScreenOverlaysDisabled" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScreenSlideshow" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoChangingLockScreen" /t REG_DWORD /d "1" /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v "NoLockScreenCamera" /t REG_DWORD /d "1" /f
 
 echo -- Enable Full Path View in Explorer
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "FullPath" /t REG_DWORD /d 1 /f 
@@ -831,10 +869,17 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\%%i" /v "DisableDMACopy" /t
 
 
 echo -- Critical Worker Threads
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalCriticalWorkerThreads" /t REG_DWORD /d "64" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalCriticalWorkerThreads" /t REG_DWORD /d "32" /f
 
 echo -- Delayed Worker Threads
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalDelayedWorkerThreads" /t REG_DWORD /d "64" /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Executive" /v "AdditionalDelayedWorkerThreads" /t REG_DWORD /d "32" /f
+
+echo -- Boost Critical Threads
+reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "BoostCriticalThreads" /t REG_DWORD /d "1" /f
+
+echo -- Enable Critical Thread Priority
+reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "CriticalThreadPriority" /t REG_DWORD /d "1" /f
+
 
 
 echo -- Disable BlockWrite
@@ -883,6 +928,45 @@ rem # 0xffffffff = FULL DLL HIJACKING PROTECTION
 reg add "HKLM\System\CurrentControlSet\Control\Session Manager" /v "CWDIllegalInDllSearch" /t REG_DWORD /d "0xffffffff" /f
 
 reg add "HKLM\System\CurrentControlSet\Control\Session Manager" /v "ImageExecutionOptions" /t REG_DWORD /d "0" /
+
+
+echo -- Disable Expiration Popups
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DisableExpirationPopups" /t REG_DWORD /d "1" /f
+
+echo -- Disable Specific Popups
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DisableSpecificPopups" /t REG_DWORD /d "1" /f
+
+echo -- Dont Ask Again
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DontAskAgain" /t REG_DWORD /d "1" /f
+
+echo -- Enable Force Igpu Dgpu From UI
+Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "EnableForceIgpuDgpuFromUI" /t REG_DWORD /d "1" /f
+
+
+echo -- Disable Apps Blocking Shutdown
+Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "AllowBlockingAppsAtShutdown" /t REG_DWORD /d "0" /f
+
+echo -- Disable Wait For Network
+Reg.exe add "HKLM\Software\Policies\Microsoft\Windows\System" /v "WaitForNetwork" /t REG_DWORD /d "0" /f
+
+
+echo -- Memory Management Tweaking (RAM)
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "NonPagedPoolSize" /t REG_DWORD /d "0" /f
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "PagedPoolQuota" /t REG_DWORD /d "0" /f
+
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "PagedPoolSize" /t REG_DWORD /d "0" /f
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "PhysicalAddressExtension" /t REG_DWORD /d "1" /f
+
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "PoolUsageMaximum" /t REG_DWORD /d "64" /f
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "ProcessPrePage" /t REG_DWORD /d "1" /f
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "RegistryProcessMemoryOptimization" /t REG_DWORD /d "1" /f
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "SchedulerQuantum" /t REG_DWORD /d "1" /f
+
+
+echo -- Disable Tablet features
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "TabletPostureTaskbar" /t REG_DWORD /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAutoHideInTabletMode" /t REG_DWORD /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" /v "NumThumbnails" /t REG_DWORD /d "0" /f
 
 
 echo -- Set environment variables

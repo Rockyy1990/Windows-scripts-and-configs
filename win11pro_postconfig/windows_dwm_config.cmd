@@ -6,10 +6,6 @@ echo.
 
 pause
 
-Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DisableExpirationPopups" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DisableSpecificPopups" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "DontAskAgain" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "EnableForceIgpuDgpuFromUI" /t REG_DWORD /d "1" /f
 
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "FrameDisplayBaseNegOffsetNS" /t REG_DWORD /d "0" /f
 Reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\DWM\Schedule" /v "FrameDisplayResDivValue" /t REG_DWORD /d "1" /f

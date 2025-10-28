@@ -1,0 +1,75 @@
+Here's a Python script that mimics a simple version of rsync for Windows. 
+The script allows you to specify a source directory and a target directory, 
+checks file modification dates to recognize changes, and prompts for confirmation before synchronization.
+
+Python Script: Simple Sync Tool
+
+python
+
+import os
+import shutil
+from datetime import datetime
+
+def get_file_mod_time(file_path):
+    return os.path.getmtime(file_path)
+
+def sync_files(source, target):
+    if not os.path.exists(target):
+        os.makedirs(target)
+
+    for item in os.listdir(source):
+        source_path = os.path.join(source, item)
+        target_path = os.path.join(target, item)
+
+        if os.path.isdir(source_path):
+            sync_files(source_path, target_path)
+        elif os.path.isfile(source_path):
+            if not os.path.exists(target_path) or \
+               get_file_mod_time(source_path) > get_file_mod_time(target_path):
+                
+                print(f"File to be synced: {source_path} -> {target_path}")
+                confirmation = input(f"Do you want to sync this file? (y/n): ")
+                if confirmation.lower() == 'y':
+                    shutil.copy2(source_path, target_path)
+                    print(f"Synced: {target_path}")
+
+def main():
+    source = input("Enter the source directory: ")
+    target = input("Enter the target directory: ")
+
+    if not os.path.exists(source):
+        print("The source directory does not exist.")
+        return
+
+    print(f"Source: {source}")
+    print(f"Target: {target}")
+
+    sync_files(source, target)
+
+if __name__ == "__main__":
+    main()
+
+How to Use the Script
+
+    Save the script: Copy the code into a text editor and save it as sync_tool.py.
+
+    Run the script: Open Command Prompt, navigate to the folder where you saved the script, and run:
+
+bash
+
+    python sync_tool.py
+
+    Enter directories: Follow the prompts to enter the source and target directories.
+
+Key Features
+
+    Mod time check: The script compares the last modification times of files to determine if they need syncing.
+    User confirmation: Before each file is synced, you'll be prompted to confirm the action.
+    Recursive sync: The script supports syncing nested directories.
+
+Important Notes
+
+    Make sure Python is installed on your system, and you execute this script in an environment that supports it.
+    The script uses shutil.copy2() to preserve the original file's metadata during the copy.
+
+

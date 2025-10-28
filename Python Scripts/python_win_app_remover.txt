@@ -1,0 +1,89 @@
+Here's a Python script that functions as a simple Windows application uninstaller. 
+This script will list installed applications and allow you to select one to uninstall using Windows' built-in uninstaller.
+
+Python Script: Windows App Uninstaller
+
+python
+
+import subprocess
+import wmi
+
+def list_installed_apps():
+    c = wmi.WMI()
+    installed_apps = []
+    
+    for app in c.Win32_Product():
+        installed_apps.append({
+            'name': app.Name,
+            'identifying_number': app.IdentifyingNumber
+        })
+    
+    return installed_apps
+
+def uninstall_app(app_id):
+    c = wmi.WMI()
+    app = c.Win32_Product(IdentifyingNumber=app_id)
+    
+    if app:
+        app[0].Uninstall()
+        print(f"Uninstalling {app[0].Name}...")
+    else:
+        print("Application not found.")
+
+def main():
+    installed_apps = list_installed_apps()
+    
+    if not installed_apps:
+        print("No installed applications found.")
+        return
+    
+    print("Installed Applications:")
+    for index, app in enumerate(installed_apps):
+        print(f"{index + 1}. {app['name']}")
+    
+    choice = int(input("Enter the number of the application to uninstall: ")) - 1
+    
+    if 0 <= choice < len(installed_apps):
+        app_id = installed_apps[choice]['identifying_number']
+        confirm = input(f"Are you sure you want to uninstall {installed_apps[choice]['name']}? (y/n): ")
+        
+        if confirm.lower() == 'y':
+            uninstall_app(app_id)
+        else:
+            print("Uninstall canceled.")
+    else:
+        print("Invalid choice.")
+
+if __name__ == "__main__":
+    main()
+
+How to Use the Script
+
+    Install WMI module: Before running the script, ensure you have the WMI module installed. 
+	You can do this by running:
+
+bash
+
+pip install WMI
+
+Save the script: Copy the code into a text editor and save it as app_uninstaller.py.
+
+Run the script: Open Command Prompt as Administrator, navigate to the folder where you saved the script, and run:
+
+bash
+
+    python app_uninstaller.py
+
+    Uninstall Applications: The script will list installed applications. 
+	Enter the number of the application you wish to uninstall and confirm the action.
+
+Key Features
+
+    List Installed Apps: The script retrieves a list of installed applications using WMI.
+    Uninstallation: It allows users to uninstall an application based on the application's identifying number.
+    User Confirmation: It asks for confirmation before proceeding with the uninstallation.
+
+Important Notes
+
+    This script should be run with administrator privileges to uninstall applications.
+    Uninstalling applications can be irreversible; make sure you are sure about the uninstallation.

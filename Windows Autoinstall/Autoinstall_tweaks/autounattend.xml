@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  =====================================================================
+  Windows 11 24H2 / 25H2 — Unattended Installation
+  =====================================================================
+  Sprache:        Deutsch (de-DE)
+  Tastatur:       Deutsch (0407:00000407)
+  Zeitzone:       W. Europe Standard Time
+  Bypass:         TPM / SecureBoot / RAM / Storage / CPU / BitLocker
+  OOBE:           EULA, Online-Konto, Wireless, Privacy uebersprungen
+  Konto:          User erstellt lokales Konto im OOBE (kein AutoLogon)
+  Sicherheits-
+  fragen:         Per Registry deaktiviert
+  Disk:           MANUELLE Auswahl im Setup
+  Edition:        MANUELLE Auswahl im Setup
+  Login-Screen:   Schwarz, kein Hintergrundbild
+  Lock-Screen:    Deaktiviert
+  Performance:    GPU/Audio Multimedia-Priority, Game-Mode, HAGS,
+                  GameDVR aus, Network Throttling aus, MMCSS getuned
+
+  Platzierung:    Datei als 'autounattend.xml' im Root des
+                  Installations-USB / der ISO ablegen.
+  Encoding:       UTF-8 mit CRLF (Windows-Standard)
+  =====================================================================
+-->
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+
+  <!-- ================================================================ -->
+  <!-- PASS 1: windowsPE  -  Hardware-Bypass + Sprache                  -->
+  <!-- ================================================================ -->
+  <settings pass="windowsPE">
+
+    <component name="Microsoft-Windows-International-Core-WinPE"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <SetupUILanguage>
+        <UILanguage>de-DE</UILanguage>
+      </SetupUILanguage>
+      <InputLocale>0407:00000407</InputLocale>
+      <SystemLocale>de-DE</SystemLocale>
+      <UILanguage>de-DE</UILanguage>
+      <UILanguageFallback>de-DE</UILanguageFallback>
+      <UserLocale>de-DE</UserLocale>
+    </component>
+
+    <component name="Microsoft-Windows-Setup"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+      <!-- HARDWARE-CHECKS BYPASSEN (TPM, SecureBoot, RAM, Storage, CPU) -->
+      <RunSynchronous>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Bypass TPM Check</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\LabConfig /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Bypass Secure Boot Check</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\LabConfig /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>3</Order>
+          <Description>Bypass RAM Check</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\LabConfig /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>4</Order>
+          <Description>Bypass Storage Check</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\LabConfig /v BypassStorageCheck /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>5</Order>
+          <Description>Bypass CPU Check</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\LabConfig /v BypassCPUCheck /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>6</Order>
+          <Description>Allow upgrades on unsupported hardware</Description>
+          <Path>reg add HKLM\SYSTEM\Setup\MoSetup /v AllowUpgradesWithUnsupportedTPMOrCPU /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>7</Order>
+          <Description>Disable BitLocker Auto-Encryption (24H2/25H2)</Description>
+          <Path>reg add HKLM\SYSTEM\CurrentControlSet\Control\BitLocker /v PreventDeviceEncryption /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+      </RunSynchronous>
+
+      <!-- KEINE DiskConfiguration / ImageInstall:
+           User waehlt manuell Disk + Edition im Setup-Wizard. -->
+
+      <UserData>
+        <AcceptEula>true</AcceptEula>
+        <FullName>Admin</FullName>
+        <Organization></Organization>
+      </UserData>
+
+      <UseConfigurationSet>false</UseConfigurationSet>
+    </component>
+  </settings>
+
+  <!-- ================================================================ -->
+  <!-- PASS 4: specialize  -  System-Tweaks via Registry                -->
+  <!-- ================================================================ -->
+  <settings pass="specialize">
+
+    <component name="Microsoft-Windows-Shell-Setup"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <ComputerName>*</ComputerName>
+      <TimeZone>W. Europe Standard Time</TimeZone>
+      <CopyProfile>false</CopyProfile>
+    </component>
+
+    <component name="Microsoft-Windows-International-Core"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <InputLocale>0407:00000407</InputLocale>
+      <SystemLocale>de-DE</SystemLocale>
+      <UILanguage>de-DE</UILanguage>
+      <UILanguageFallback>de-DE</UILanguageFallback>
+      <UserLocale>de-DE</UserLocale>
+    </component>
+
+    <component name="Microsoft-Windows-Deployment"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <RunSynchronous>
+
+        <!-- ============== OOBE BYPASS ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>BypassNRO Registry Key</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v BypassNRO /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- Sicherheitsfragen bei lokaler Kontoerstellung deaktivieren -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Disable Security Questions for local accounts</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v NoLocalPasswordResetQuestions /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== TELEMETRIE / PRIVACY ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>10</Order>
+          <Description>Disable Telemetry (Policy)</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>11</Order>
+          <Description>Disable DiagTrack Service</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v Start /t REG_DWORD /d 4 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>12</Order>
+          <Description>Disable dmwappushservice</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /v Start /t REG_DWORD /d 4 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>13</Order>
+          <Description>Disable Consumer Features</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>14</Order>
+          <Description>Disable Cloud Optimized Content</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v DisableCloudOptimizedContent /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>15</Order>
+          <Description>Disable Lockscreen Spotlight</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v DisableWindowsSpotlightFeatures /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== PRIVACY (HKLM) ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>16</Order>
+          <Description>Disable Activity Feed / Timeline</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v EnableActivityFeed /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>17</Order>
+          <Description>Disable Publish User Activities</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v PublishUserActivities /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>18</Order>
+          <Description>Disable Cloud Clipboard Sync</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v AllowCrossDeviceClipboard /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>19</Order>
+          <Description>Disable Cortana</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== AI / COPILOT / RECALL ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>20</Order>
+          <Description>Disable Windows Copilot</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>21</Order>
+          <Description>Disable Recall (24H2+)</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v DisableAIDataAnalysis /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>22</Order>
+          <Description>Disable Bing Search Suggestions</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>23</Order>
+          <Description>Disable Widgets News and Interests</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v AllowNewsAndInterests /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>24</Order>
+          <Description>Edge: Skip First Run Experience</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v HideFirstRunExperience /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== PRIVACY: WIFI SENSE / LOCATION / DIAGNOSTICS ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>25</Order>
+          <Description>Disable Wi-Fi Sense Hotspot Reporting</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" /v value /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>26</Order>
+          <Description>Disable Wi-Fi Sense Auto-Connect to Open Hotspots</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v value /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>27</Order>
+          <Description>Disable Diagnostic Data Viewer</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey" /v EnableEventTranscript /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>28</Order>
+          <Description>Disable Customer Experience Improvement Program</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows" /v CEIPEnable /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>29</Order>
+          <Description>Disable Application Compatibility Telemetry</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v AITEnable /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== LOCK SCREEN AUS + LOGIN BG SCHWARZ ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>30</Order>
+          <Description>Disable Lock Screen completely</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoLockScreen /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>31</Order>
+          <Description>Disable Logon Background Image (black)</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableLogonBackgroundImage /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>32</Order>
+          <Description>Disable Acrylic Blur on Logon</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableAcrylicBackgroundOnLogon /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== GPU / GRAPHICS PERFORMANCE ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>40</Order>
+          <Description>Enable Hardware-Accelerated GPU Scheduling (HAGS)</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v HwSchMode /t REG_DWORD /d 2 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>41</Order>
+          <Description>Enable Game Mode</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>42</Order>
+          <Description>Enable Auto Game Mode</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\GameBar" /v AutoGameModeEnabled /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>43</Order>
+          <Description>Disable GameDVR (Performance)</Description>
+          <Path>reg add "HKLM\SYSTEM\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>44</Order>
+          <Description>Disable GameDVR Policy</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR" /v AllowGameDVR /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>45</Order>
+          <Description>Disable App Capture</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== MMCSS: GAMES + AUDIO PRIORITY ============== -->
+        <!-- SystemResponsiveness=0: Multimedia bekommt 100% statt 80% CPU-Reservierung -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>50</Order>
+          <Description>MMCSS: SystemResponsiveness Multimedia priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v SystemResponsiveness /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>51</Order>
+          <Description>MMCSS: Disable Network Throttling</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f</Path>
+        </RunSynchronousCommand>
+        <!-- Games-Task Priority hochsetzen -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>52</Order>
+          <Description>MMCSS Games: GPU Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d 8 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>53</Order>
+          <Description>MMCSS Games: Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v Priority /t REG_DWORD /d 6 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>54</Order>
+          <Description>MMCSS Games: Scheduling Category</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d High /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>55</Order>
+          <Description>MMCSS Games: SFIO Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d High /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>56</Order>
+          <Description>MMCSS Games: Background Only</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d False /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>57</Order>
+          <Description>MMCSS Games: Clock Rate</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d 10000 /f</Path>
+        </RunSynchronousCommand>
+        <!-- Audio-Task Priority hochsetzen -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>60</Order>
+          <Description>MMCSS Audio: GPU Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "GPU Priority" /t REG_DWORD /d 8 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>61</Order>
+          <Description>MMCSS Audio: Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v Priority /t REG_DWORD /d 6 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>62</Order>
+          <Description>MMCSS Audio: Scheduling Category</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "Scheduling Category" /t REG_SZ /d High /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>63</Order>
+          <Description>MMCSS Audio: SFIO Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio" /v "SFIO Priority" /t REG_SZ /d High /f</Path>
+        </RunSynchronousCommand>
+        <!-- Pro Audio noch aggressiver -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>64</Order>
+          <Description>MMCSS Pro Audio: Priority</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Pro Audio" /v Priority /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>65</Order>
+          <Description>MMCSS Pro Audio: Scheduling Category</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Pro Audio" /v "Scheduling Category" /t REG_SZ /d High /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== AUDIO-DIENST AUF AUTO-START ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>70</Order>
+          <Description>Audio Service: Automatic Start</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Services\Audiosrv" /v Start /t REG_DWORD /d 2 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>71</Order>
+          <Description>Audio Endpoint Builder: Automatic Start</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Services\AudioEndpointBuilder" /v Start /t REG_DWORD /d 2 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== AUDIO LATENCY ============== -->
+        <!-- Audio Enhancements global aus: spart 20-50ms Latenz pro Endpoint -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>72</Order>
+          <Description>Disable Audio Enhancements (lower latency)</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Audio\AudioEnhancements" /v Disable /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <!-- Loudness Equalization aus: greift in Audio-Stream ein -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>73</Order>
+          <Description>Disable Audio Loudness Equalization</Description>
+          <Path>reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio" /v DisableProtectedAudioDG /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== POWER + KERNEL ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>80</Order>
+          <Description>Set High Performance Power Plan</Description>
+          <Path>cmd /c powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>81</Order>
+          <Description>Disable Hibernation</Description>
+          <Path>cmd /c powercfg /hibernate off</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>82</Order>
+          <Description>Disable Fast Startup</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v HiberbootEnabled /t REG_DWORD /d 0 /f</Path>
+        </RunSynchronousCommand>
+        <!-- Kernel-Tweaks: spurious interrupts und disabling page-out kernel -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>83</Order>
+          <Description>Kernel: DisablePagingExecutive (keep kernel in RAM)</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v DisablePagingExecutive /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>84</Order>
+          <Description>Win32: Higher Priority for Foreground Apps</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v Win32PrioritySeparation /t REG_DWORD /d 38 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== NETZWERK ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>90</Order>
+          <Description>Disable NDU service (Network reservation)</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Services\Ndu" /v Start /t REG_DWORD /d 4 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== FILESYSTEM ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>100</Order>
+          <Description>Enable Win32 LongPaths</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Order>101</Order>
+          <Description>NTFS: Disable LastAccess Updates (faster I/O)</Description>
+          <Path>reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v NtfsDisableLastAccessUpdate /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+        <!-- ============== UPDATES ============== -->
+        <RunSynchronousCommand wcm:action="add">
+          <Order>110</Order>
+          <Description>Block automatic driver updates via WU</Description>
+          <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v ExcludeWUDriversInQualityUpdate /t REG_DWORD /d 1 /f</Path>
+        </RunSynchronousCommand>
+
+      </RunSynchronous>
+    </component>
+  </settings>
+
+  <!-- ================================================================ -->
+  <!-- PASS 7: oobeSystem  -  Account, OOBE, FirstLogon                 -->
+  <!-- ================================================================ -->
+  <settings pass="oobeSystem">
+
+    <component name="Microsoft-Windows-International-Core"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <InputLocale>0407:00000407</InputLocale>
+      <SystemLocale>de-DE</SystemLocale>
+      <UILanguage>de-DE</UILanguage>
+      <UILanguageFallback>de-DE</UILanguageFallback>
+      <UserLocale>de-DE</UserLocale>
+    </component>
+
+    <component name="Microsoft-Windows-Shell-Setup"
+               processorArchitecture="amd64"
+               publicKeyToken="31bf3856ad364e35"
+               language="neutral"
+               versionScope="nonSxS"
+               xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <!-- HideLocalAccountScreen=false: User soll Konto im OOBE selbst erstellen -->
+        <HideLocalAccountScreen>false</HideLocalAccountScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+        <NetworkLocation>Home</NetworkLocation>
+        <ProtectYourPC>3</ProtectYourPC>
+        <UnattendEnableRetailDemo>false</UnattendEnableRetailDemo>
+      </OOBE>
+
+      <!-- Kein UserAccounts-Block: User legt Konto manuell im OOBE an -->
+      <!-- Kein AutoLogon-Block: User logt sich nach Setup normal ein -->
+
+      <TimeZone>W. Europe Standard Time</TimeZone>
+
+      <!-- ============================================================ -->
+      <!-- FIRSTLOGON: User-Hive-Tweaks + Debloat                       -->
+      <!-- ============================================================ -->
+      <FirstLogonCommands>
+
+        <!-- ============== EXPLORER UI ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Explorer: Show file extensions</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v HideFileExt /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>2</Order>
+          <Description>Explorer: Show hidden files</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 1 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>3</Order>
+          <Description>Explorer: Open This PC instead of Quick Access</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v LaunchTo /t REG_DWORD /d 1 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>4</Order>
+          <Description>Taskbar: Left align (Win10-Style)</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarAl /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>5</Order>
+          <Description>Taskbar: Hide Search box</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>6</Order>
+          <Description>Taskbar: Hide Task View Button</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowTaskViewButton /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>7</Order>
+          <Description>Taskbar: Hide Widgets</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarDa /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>8</Order>
+          <Description>Taskbar: Hide Chat</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarMn /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== KLASSISCHES KONTEXTMENUE ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>9</Order>
+          <Description>Restore classic context menu (Win10-Style)</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== DARK MODE ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>10</Order>
+          <Description>Enable Dark Mode (Apps)</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v AppsUseLightTheme /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>11</Order>
+          <Description>Enable Dark Mode (System)</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v SystemUsesLightTheme /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== ADS / SUGGESTIONS AUS ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>12</Order>
+          <Description>Disable lockscreen tips</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenOverlayEnabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>13</Order>
+          <Description>Disable Start Menu suggestions</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-338388Enabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>14</Order>
+          <Description>Disable Settings suggestions</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-338393Enabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>15</Order>
+          <Description>Disable tips and tricks</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-338389Enabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== PRIVACY (HKCU) ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>16</Order>
+          <Description>Disable Advertising ID</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v Enabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>17</Order>
+          <Description>Disable Tailored Experiences</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v TailoredExperiencesWithDiagnosticDataEnabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>18</Order>
+          <Description>Disable Inking and Typing Personalization</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v AcceptedPrivacyPolicy /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>19</Order>
+          <Description>Disable Input Personalization</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\InputPersonalization" /v RestrictImplicitInkCollection /t REG_DWORD /d 1 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>20</Order>
+          <Description>Disable Implicit Text Collection</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\InputPersonalization" /v RestrictImplicitTextCollection /t REG_DWORD /d 1 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>21</Order>
+          <Description>Disable Feedback Notifications</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Siuf\Rules" /v NumberOfSIUFInPeriod /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== AUDIO LATENCY (HKCU) ============== -->
+        <!-- Communications: nicht ducken, sonst dimmt Win bei Voice-Calls alles andere -->
+        <SynchronousCommand wcm:action="add">
+          <Order>22</Order>
+          <Description>Audio: Communications - Do Nothing on call</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Multimedia\Audio" /v UserDuckingPreference /t REG_DWORD /d 3 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== GAMING / GPU PERFORMANCE (USER-HIVE) ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>20</Order>
+          <Description>User: Enable Auto Game Mode</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v AutoGameModeEnabled /t REG_DWORD /d 1 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>21</Order>
+          <Description>User: Disable Game DVR</Description>
+          <CommandLine>reg add "HKCU\System\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>22</Order>
+          <Description>User: Disable Game Bar tips</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v ShowStartupPanel /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== MOUSE: ACCELERATION AUS ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>25</Order>
+          <Description>Disable mouse acceleration (MouseSpeed)</Description>
+          <CommandLine>reg add "HKCU\Control Panel\Mouse" /v MouseSpeed /t REG_SZ /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>26</Order>
+          <Description>Disable mouse threshold 1</Description>
+          <CommandLine>reg add "HKCU\Control Panel\Mouse" /v MouseThreshold1 /t REG_SZ /d 0 /f</CommandLine>
+        </SynchronousCommand>
+        <SynchronousCommand wcm:action="add">
+          <Order>27</Order>
+          <Description>Disable mouse threshold 2</Description>
+          <CommandLine>reg add "HKCU\Control Panel\Mouse" /v MouseThreshold2 /t REG_SZ /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== DEBLOAT: APPX REMOVAL ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>30</Order>
+          <Description>Remove provisioned bloatware apps</Description>
+          <CommandLine>powershell -NoProfile -ExecutionPolicy Bypass -Command "$apps=@('Microsoft.BingNews','Microsoft.BingWeather','Microsoft.BingSearch','Microsoft.GamingApp','Microsoft.GetHelp','Microsoft.Getstarted','Microsoft.MicrosoftOfficeHub','Microsoft.MicrosoftSolitaireCollection','Microsoft.MixedReality.Portal','Microsoft.OneConnect','Microsoft.People','Microsoft.PowerAutomateDesktop','Microsoft.SkypeApp','Microsoft.Todos','Microsoft.WindowsAlarms','Microsoft.WindowsCommunicationsApps','Microsoft.WindowsFeedbackHub','Microsoft.WindowsMaps','Microsoft.Xbox.TCUI','Microsoft.XboxApp','Microsoft.XboxGameOverlay','Microsoft.XboxGamingOverlay','Microsoft.XboxIdentityProvider','Microsoft.XboxSpeechToTextOverlay','Microsoft.YourPhone','Microsoft.ZuneMusic','Microsoft.ZuneVideo','MicrosoftCorporationII.QuickAssist','Clipchamp.Clipchamp','MicrosoftTeams','Microsoft.Copilot','Microsoft.OutlookForWindows'); foreach($a in $apps){ Get-AppxPackage -AllUsers -Name $a | Remove-AppxPackage -AllUsers -EA SilentlyContinue; Get-AppxProvisionedPackage -Online | Where-Object DisplayName -EQ $a | Remove-AppxProvisionedPackage -Online -EA SilentlyContinue }"</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== ONEDRIVE AUTO-INSTALL BLOCKEN ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>31</Order>
+          <Description>Remove OneDrive auto-install</Description>
+          <CommandLine>cmd /c "taskkill /f /im OneDriveSetup.exe 2&gt;nul &amp; reg delete HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v OneDriveSetup /f 2&gt;nul &amp; exit 0"</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== ANMELDESCHIRM SCHWARZ + LOCKSCREEN AUS (USER) ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>32</Order>
+          <Description>User: Disable Lock Screen Spotlight</Description>
+          <CommandLine>reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenEnabled /t REG_DWORD /d 0 /f</CommandLine>
+        </SynchronousCommand>
+
+        <!-- ============== EXPLORER NEUSTART ============== -->
+        <SynchronousCommand wcm:action="add">
+          <Order>40</Order>
+          <Description>Restart Explorer to apply tweaks</Description>
+          <CommandLine>cmd /c "taskkill /f /im explorer.exe &amp; start explorer.exe"</CommandLine>
+        </SynchronousCommand>
+
+      </FirstLogonCommands>
+    </component>
+  </settings>
+</unattend>
